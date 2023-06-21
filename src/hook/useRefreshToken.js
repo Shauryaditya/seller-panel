@@ -1,22 +1,23 @@
-// 'use client'
-// import axios from '../api/axios';
-// import useAuth from './useAuth';
+'use client'
+import useAuth from "./useAuth";
+const BASE_URL = 'https://two1genx.onrender.com'
+const useRefreshToken = () => {
+    const { auth, setAuth } = useAuth();
+    const refreshToken = auth.refresh_token;
+    const refresh = async () => {
+        const response = await fetch(`${BASE_URL}/v1/seller-auth/refresh-token`, {
+            headers: {
+                Authorization: `Bearer ${refreshToken}`,
+            }
+        });
+        setAuth(prev => {
+            console.log(JSON.stringify(prev));
+            console.log(response.access_token);
+            return { ...prev, access_token: response.access_token }
+        });
+        return response.data.accessToken;
+    }
+    return refresh;
+};
 
-// const useRefreshToken = () => {
-//     const { setAuth } = useAuth();
-
-//     const refresh = async () => {
-//         const response = await axios.get('/refresh', {
-//             withCredentials: true
-//         });
-//         setAuth(prev => {
-//             console.log(JSON.stringify(prev));
-//             console.log(response.data.accessToken);
-//             return { ...prev, accessToken: response.data.accessToken }
-//         });
-//         return response.data.accessToken;
-//     }
-//     return refresh;
-// };
-
-// export default useRefreshToken;
+export default useRefreshToken;

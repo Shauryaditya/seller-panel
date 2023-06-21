@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import LeftSide from "./LeftSide";
+import useAuth from "@/hook/useAuth";
 const BASE_URL = "https://two1genx.onrender.com";
 const seller_id = "6468bcda3183f9f88c0e1ca8";
 const ProductIdentity = (props) => {
-
+  const { auth } = useAuth();
   const { setSelectedTab, formData, setFormData, draftedTabs, setDraftedTabs, id, } = props;
-  let accessToken = ''
-  useEffect(() => {
-    // Perform localStorage action
-    let accessToken = localStorage.getItem("access_token");
-    console.log(accessToken);
-  }, [])
+
+  const accessToken = auth.access_token;
+
   console.log(formData);
   const [option, setOption] = useState("");
   const [variants, setVariants] = useState(null);

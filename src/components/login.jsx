@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 export const Login = () => {
     const router = useRouter();
     // importing context state
-    const { setAuth } = useAuth();
+    const { setAuth, persist, setPersist } = useAuth();
     const [isOptSent, setIsOtpSent] = useState(false)
     const [timer, setTimer] = useState(0);
 
@@ -83,10 +83,15 @@ export const Login = () => {
                     setIsOtpSent(true)
                     setTimer(60); // Set the initial timer value to 60 seconds
                 } else {
-                    setAuth(responseData)
+                    setAuth({
+                        access_token: responseData.access_token,
+                        refresh_token: responseData.refresh_token,
+                        userId: responseData.userId, isLogin: true
+                    })
                     localStorage.setItem("access_token", responseData.access_token);
                     localStorage.setItem("refresh_token", responseData.refresh_token);
                     localStorage.setItem("userId", responseData.userId);
+
                     // Redirect to catelog page
                     router.push('/catelog')
                 }
