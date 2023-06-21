@@ -82,14 +82,12 @@ export const Login = () => {
                 if (loginOption === 'otp' && url === 'https://two1genx.onrender.com/v1/seller-auth/sendLoginOtp') {
                     setIsOtpSent(true)
                     setTimer(60); // Set the initial timer value to 60 seconds
-                }
-
-                setAuth(responseData)
-                localStorage.setItem("access_token", responseData.access_token);
-                localStorage.setItem("refresh_token", responseData.refresh_token);
-                localStorage.setItem("userId", responseData.userId);
-                // Redirect to catelog page
-                if (loginOption !== 'otp') {
+                } else {
+                    setAuth(responseData)
+                    localStorage.setItem("access_token", responseData.access_token);
+                    localStorage.setItem("refresh_token", responseData.refresh_token);
+                    localStorage.setItem("userId", responseData.userId);
+                    // Redirect to catelog page
                     router.push('/catelog')
                 }
 
