@@ -83,12 +83,15 @@ export const Login = () => {
                     setIsOtpSent(true)
                     setTimer(60); // Set the initial timer value to 60 seconds
                 }
+
                 setAuth(responseData)
                 localStorage.setItem("access_token", responseData.access_token);
                 localStorage.setItem("refresh_token", responseData.refresh_token);
                 localStorage.setItem("userId", responseData.userId);
                 // Redirect to catelog page
-                router.push('/catelog')
+                if (loginOption !== 'otp') {
+                    router.push('/catelog')
+                }
 
             }
             console.log(responseData);
