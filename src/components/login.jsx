@@ -1,7 +1,13 @@
+
 import React, { useState, useEffect } from "react";
 const BASE_URL = 'https://two1genx.onrender.com'
-export const Login = () => {
+import useAuth from "@/hook/useAuth";
+import { useRouter } from 'next/navigation';
 
+export const Login = () => {
+    const router = useRouter();
+    // importing context state
+    const { setAuth } = useAuth();
     const [isOptSent, setIsOtpSent] = useState(false)
     const [timer, setTimer] = useState(0);
 
@@ -77,11 +83,12 @@ export const Login = () => {
                     setIsOtpSent(true)
                     setTimer(60); // Set the initial timer value to 60 seconds
                 }
+                setAuth(responseData)
                 localStorage.setItem("access_token", responseData.access_token);
                 localStorage.setItem("refresh_token", responseData.refresh_token);
                 localStorage.setItem("userId", responseData.userId);
-                // Redirect to another page
-                window.location.href = '/catelog'
+                // Redirect to catelog page
+                router.push('/catelog')
 
             }
             console.log(responseData);

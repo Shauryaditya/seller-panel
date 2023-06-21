@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+const BASE_URL = "https://two1genx.onrender.com";
 const MainImage = ({ id }) => {
   const [isClicked, setIsClicked] = useState(false);
 

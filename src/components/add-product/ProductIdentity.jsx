@@ -3,17 +3,14 @@ import LeftSide from "./LeftSide";
 const BASE_URL = "https://two1genx.onrender.com";
 const seller_id = "6468bcda3183f9f88c0e1ca8";
 const ProductIdentity = (props) => {
-  const accessToken = localStorage.getItem("access_token");
-  console.log(accessToken);
 
-  const {
-    setSelectedTab,
-    formData,
-    setFormData,
-    draftedTabs,
-    setDraftedTabs,
-    id,
-  } = props;
+  const { setSelectedTab, formData, setFormData, draftedTabs, setDraftedTabs, id, } = props;
+  let accessToken = ''
+  useEffect(() => {
+    // Perform localStorage action
+    let accessToken = localStorage.getItem("access_token");
+    console.log(accessToken);
+  }, [])
   console.log(formData);
   const [option, setOption] = useState("");
   const [variants, setVariants] = useState(null);
