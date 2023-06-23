@@ -1,9 +1,9 @@
-
+'use client'
 import React, { useState, useEffect } from "react";
 const BASE_URL = 'https://two1genx.onrender.com'
 import useAuth from "@/hook/useAuth";
 import { useRouter } from 'next/navigation';
-
+import Link from "next/link";
 export const Login = () => {
     const router = useRouter();
     // importing context state
@@ -84,8 +84,8 @@ export const Login = () => {
                     setTimer(60); // Set the initial timer value to 60 seconds
                 } else {
                     setAuth({
-                        access_token: responseData.access_token,
-                        refresh_token: responseData.refresh_token,
+                        accessToken: responseData.access_token,
+                        refreshToken: responseData.refresh_token,
                         userId: responseData.userId, isLogin: true
                     })
                     localStorage.setItem("access_token", responseData.access_token);
@@ -250,8 +250,8 @@ export const Login = () => {
                         <p className={`text-xs  text-center ${isOptSent ? 'text-green-500' : 'text-red-500'}`}>{error}</p>
                     }
                     <div className="flex justify-center gap-5 py-2">
-                        <a className="text-xs text-[#333333]">Forgot Password</a>
-                        <a className="text-xs text-[#333333]">Create a new account</a>
+                        <Link href="/signup" className="text-xs text-[#333333]">Forgot Password</Link>
+                        <Link href="/signup" className="text-xs text-[#333333]">Create a new account</Link>
                     </div>
                 </form>
                 {/* <Otp

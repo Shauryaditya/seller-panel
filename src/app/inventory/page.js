@@ -1,19 +1,31 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Inventory from '@/components/inventory/Inventory'
-import useAuth from '@/hook/useAuth'
-import { useRouter } from 'next/navigation';
+import Footer from '@/components/Footer'
+import { redirect } from 'next/navigation'
 const page = () => {
-    const router = useRouter()
-    const { auth } = useAuth()
-    const isLogin = auth.isLogin
-    if (!isLogin) {
-        router.push('/login')
-    } else {
+    const [token, setToken] = useState(null)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const accessToken = localStorage.getItem('access_token');
+            console.log('add-product', accessToken);
+            setToken(accessToken)
+            if (!accessToken) {
+                redirect('/');
+            }
+        }
+    }, []);
+    if (token !== null) {
+
         return (
-            <Inventory />
+            <div>
+                <Inventory />
+                {/* <Footer /> */}
+            </div>
+
         )
     }
+
 }
 
 export default page

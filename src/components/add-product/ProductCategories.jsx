@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 // import { useRouter } from 'next/navigation'
 const BASE_URL = "https://two1genx.onrender.com";
 const ProductCategories = () => {
-  // const router = useRouter()
+  const router = useRouter()
   // State for selected parentlistid
   const [selectedParentId, setSelectedParentId] = useState("");
   // State for selected parentlistid
@@ -113,9 +114,7 @@ const ProductCategories = () => {
 
       const queryString = new URLSearchParams(attributeData).toString();
       // Redirect to the next page with the data in the query string
-      window.location.href = `/add-product?${queryString}`;
-
-
+      router.push(`/add-product?${queryString}`)
     }
 
   }

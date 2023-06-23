@@ -4,6 +4,7 @@ const BASE_URL = "https://two1genx.onrender.com";
 const Offer = (props) => {
 
   // fetching  field from backend
+  const [filter, setFilter] = useState('')
   const [data, setData] = useState(null);
   const { setSelectedTab, formData, setFormData, draftedTabs, setDraftedTabs, id } = props
   const isDrafted = draftedTabs.includes(3);
@@ -17,22 +18,31 @@ const Offer = (props) => {
           `${BASE_URL}/v1/category-attributes/get-populated?page=1&limit=500&filter[category_id][$eq]=${id}`
         );
         const data = await response.json();
-        console.log(data);
-        const offer = data.categoryList.flatMap((item) => {
-          if (item.attribute_id.attribute_group_slug === "offer") {
-            return item.attribute_id;
-          } else {
-            return [];
-          }
-        });
-        setData(offer);
-        console.log(offer);
+        if (data.categoryList) {
+          const Offer = data.categoryList
+            .filter(item => item.attribute_id.attribute_group_slug === 'offer')
+            .flatMap(item => {
+              if (filter === 'required' && item.required) {
+                return item.attribute_id;
+              } else if (filter === 'recommended' && item.recommended) {
+                return item.attribute_id;
+              } else if (filter === 'all') {
+                return item.attribute_id;
+              } else if (filter !== 'required' && filter !== 'recommended' && filter !== 'all') {
+                return item.attribute_id;
+              }
+              else {
+                return [];
+              }
+            });
+          setData(Offer);
+        }
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
-  }, [id]);
+  }, [id, filter]);
   // state variables for form inputs
   const [formState, setFormState] = useState(formData);
 
@@ -70,10 +80,16 @@ const Offer = (props) => {
     }
     setFormData({ ...obj })
   };
+  const handleData = (data) => {
+    setFilter(data)
+    console.log(data);
+  }
   return (
     <main>
       <div className="flex">
-        <LeftSide />
+        <LeftSide
+          handleData={handleData}
+        />
         <div className="w-full flex flex-col">
           <section>
             <div className="max-w-6xl mx-auto flex items-center bg-[#E5F2F4]">
@@ -166,7 +182,7 @@ const Offer = (props) => {
                     Cancel
                   </p>
                 </div>
-                <div className="flex gap-x-2">
+                <div className="flex gap-x-2 py-5">
                   <button className="text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block "
                     onClick={() => {
                       handleSubmit()

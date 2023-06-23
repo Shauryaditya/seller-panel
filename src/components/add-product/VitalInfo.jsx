@@ -9,6 +9,7 @@ const VitalInfo = (props) => {
 
 
     // fetching  field from backend
+    const [filter, setFilter] = useState('')
     const [vitalInfo, setVitalInfo] = useState(null)
     useEffect(() => {
         if (isDrafted) {
@@ -19,14 +20,23 @@ const VitalInfo = (props) => {
                 const response = await fetch(`${BASE_URL}/v1/category-attributes/get-populated?page=1&limit=500&filter[category_id][$eq]=${id}`);
                 const data = await response.json();
                 if (data.categoryList) {
-                    const VitalInfo = data.categoryList.flatMap((item) => {
-                        if (item.attribute_id.attribute_group_slug === 'vital_info') {
-                            return item.attribute_id;
-                        } else {
-                            return [];
-                        }
-                    })
-                    setVitalInfo(VitalInfo)
+                    const VitalInfo = data.categoryList
+                        .filter(item => item.attribute_id.attribute_group_slug === 'vital_info')
+                        .flatMap(item => {
+                            if (filter === 'required' && item.required) {
+                                return item.attribute_id;
+                            } else if (filter === 'recommended' && item.recommended) {
+                                return item.attribute_id;
+                            } else if (filter === 'all') {
+                                return item.attribute_id;
+                            } else if (filter !== 'required' && filter !== 'recommended' && filter !== 'all') {
+                                return item.attribute_id;
+                            }
+                            else {
+                                return [];
+                            }
+                        });
+                    setVitalInfo(VitalInfo);
 
                 }
             } catch (error) {
@@ -34,7 +44,7 @@ const VitalInfo = (props) => {
             }
         }
         fetchData();
-    }, [id])
+    }, [id, filter])
 
     // state variables for form inputs
     const [formState, setFormState] = useState(formData)
@@ -60,10 +70,17 @@ const VitalInfo = (props) => {
         setFormData({ ...obj })
     }
     console.log(vitalInfo);
+
+    const handleData = (data) => {
+        setFilter(data)
+        console.log(data);
+    }
     return (
         <main>
             <div className='flex'>
-                <LeftSide />
+                <LeftSide
+                    handleData={handleData}
+                />
                 <div className='flex flex-col'>
                     <section>
                         <div className='max-w-6xl mx-auto flex items-center bg-[#E5F2F4]'>

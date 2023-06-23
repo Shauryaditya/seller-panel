@@ -1,20 +1,29 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import CatelogHome from '@/components/catelog/CatelogHome'
-import useAuth from '@/hook/useAuth'
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation'
+import Footer from '@/components/Footer'
 const page = () => {
-    const router = useRouter()
-    const { auth } = useAuth()
-    const isLogin = auth.isLogin
-    if (!isLogin) {
-        router.push('/login')
+    const [token, setToken] = useState(null)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const accessToken = localStorage.getItem('access_token');
+            console.log('add-product', accessToken);
+            setToken(accessToken)
+            if (!accessToken) {
+                redirect('/');
+            }
+        }
+    }, []);
+    if (token !== null) {
+
+        return (
+            <div>
+                <CatelogHome />
+                {/* <Footer /> */}
+            </div>
+        )
     }
-    return (
-        <div>
-            <CatelogHome />
-        </div>
-    )
 
 }
 

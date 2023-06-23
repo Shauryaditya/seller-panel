@@ -1,16 +1,22 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AddProduct from '@/components/add-product/AddProduct'
 import useAuth from '@/hook/useAuth'
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation'
 const page = () => {
-    const router = useRouter()
-    const { auth } = useAuth()
-    console.log('add product', auth);
-    const isLogin = auth.isLogin
-    if (!isLogin) {
-        router.push('/login')
-    } else {
+    const [token, setToken] = useState(null)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const accessToken = localStorage.getItem('access_token');
+            console.log('add-product', accessToken);
+            setToken(accessToken)
+            if (!accessToken) {
+                redirect('/');
+            }
+        }
+    }, []);
+    if (token !== null) {
+
         return (
             <div>
                 <AddProduct />
@@ -18,5 +24,6 @@ const page = () => {
         )
     }
 }
+
 
 export default page

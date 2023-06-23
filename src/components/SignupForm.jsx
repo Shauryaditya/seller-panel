@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation'
 import "./css/register.css";
 const BASE_URL = 'https://two1genx.onrender.com'
 export const SignupForm = () => {
-    const access_token = localStorage.getItem("access_token");
-    console.log(access_token);
+    const router = useRouter()
+    const [access_token, setToken] = useState(null)
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const accessToken = localStorage.getItem('access_token');
+            console.log('add-product', accessToken);
+            setToken(accessToken)
+        }
+    }, []);
     const [data, setData] = useState({
         sellerType: 'Establish business',
         fullname: '',
@@ -49,6 +57,9 @@ export const SignupForm = () => {
             console.log(response);
             const responseData = await response.json();
             console.log(responseData);
+            if (response.ok) {
+                router.push('/auth/login')
+            }
             // Process the response data as needed
         } catch (error) {
             console.error(error);
@@ -79,7 +90,7 @@ export const SignupForm = () => {
         console.log(url);
 
         Signup(url, formData, access_token);
-
+        console.log('signup', access_token);
     };
 
 

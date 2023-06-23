@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 const BASE_URL = 'https://two1genx.onrender.com'
 const Signup = () => {
+    const router = useRouter()
     const [isOptSent, setIsOtpSent] = useState(false)
     const [timer, setTimer] = useState(0);
     const [error, setError] = useState('')
@@ -17,6 +19,7 @@ const Signup = () => {
         })
     }
     const handleSubmit = (event) => {
+
         event.preventDefault();
         const data = {
             phone: "+91" + formData.phone,
@@ -24,6 +27,7 @@ const Signup = () => {
         }
         console.log(data);
         const url = BASE_URL + '/v1/seller-auth/verify/phone-otp'
+        console.log('verify', url);
         verifyOtp(url, data)
     }
     const sendOtp = () => {
@@ -71,7 +75,7 @@ const Signup = () => {
                 localStorage.setItem("access_token", responseData.access_token);
                 localStorage.setItem("refresh_token", responseData.refresh_token);
                 localStorage.setItem("userId", responseData.userId);
-                window.location.href = "/seller-panel/signup-form"
+                router.push('/signup/form')
             }
 
             setError(responseData.message)

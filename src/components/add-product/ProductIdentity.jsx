@@ -9,7 +9,7 @@ const ProductIdentity = (props) => {
 
   const accessToken = auth.access_token;
 
-  console.log(formData);
+
   const [option, setOption] = useState("");
   const [variants, setVariants] = useState(null);
   const isDrafted = draftedTabs.includes(1);
@@ -174,10 +174,17 @@ const ProductIdentity = (props) => {
     setHasBrand(!event.target.checked);
   };
   console.log(brandList);
+  const [filter, setFilter] = useState('')
+  const handleData = (data) => {
+    setFilter(data)
+    console.log(data);
+  }
   return (
     <main>
       <div className="flex">
-        <LeftSide />
+        <LeftSide
+          handleData={handleData}
+        />
         <div className=" max-w-7xl mx-auto text-xs">
           <form>
             <div className="max-w-6xl mx-auto flex items-center bg-[#E5F2F4]">
@@ -459,7 +466,7 @@ const ProductIdentity = (props) => {
                   Cancel
                 </p>
               </div>
-              <div className="flex gap-x-2">
+              <div className="flex gap-x-2 py-5">
                 <button
                   className="text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block "
                   onClick={() => {
