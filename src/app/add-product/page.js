@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import AddProduct from '@/components/add-product/AddProduct'
+import Footer from '@/components/Footer'
 import useAuth from '@/hook/useAuth'
 import { redirect } from 'next/navigation'
 const page = () => {
@@ -20,6 +21,7 @@ const page = () => {
         return (
             <div>
                 <AddProduct />
+                <Footer />
             </div>
         )
     }

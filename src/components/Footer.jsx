@@ -6,7 +6,7 @@ const Footer = () => {
         <div className="bg-[#F5F9FA] flex flex-col px-5">
             <div className='flex justify-between border-b border-solid border-gray-300'>
                 <div>
-                    <Image src='/assets/seller-logo.png' width={50} height={50}></Image>
+                    <Link href='/'><Image src='/assets/seller-logo.png' width={50} height={50}></Image></Link>
                 </div>
                 <div className='flex gap-x-5 items-center text-sm text-gray-900'>
                     <Link href='/select-category'>Add Product</Link>

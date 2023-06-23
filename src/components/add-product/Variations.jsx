@@ -141,7 +141,7 @@ const Variations = (props) => {
       parent_id: productId,
       variation_data: variationData,
     };
-    console.log(requestData);
+    console.log('variation', requestData);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -156,7 +156,7 @@ const Variations = (props) => {
         console.log(responseData.added_products);
         setSelectedTab(10)
       }
-
+      console.log(response);
       // Assuming the response contains a "message" field
     } catch (error) {
       console.error("Error:", error);

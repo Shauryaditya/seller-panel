@@ -20,7 +20,7 @@ const page = () => {
         return (
             <div>
                 <CatelogHome />
-                {/* <Footer /> */}
+                <Footer />
             </div>
         )
     }

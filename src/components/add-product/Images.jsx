@@ -4,8 +4,9 @@ import VariationImage from "./VariationImage.jsx";
 const BASE_URL = "https://two1genx.onrender.com";
 import "../css/images.css";
 import MainImage from "./MainImage";
-
+import { useRouter } from "next/navigation";
 const Upload = ({ productId, variationResData, formData }) => {
+  const router = useRouter()
   console.log(variationResData);
   console.log(productId)
   console.log(formData);
@@ -58,6 +59,23 @@ const Upload = ({ productId, variationResData, formData }) => {
             /> : null
         }
 
+        <div className='flex justify-between max-w-5xl  mx-5'>
+          <div>
+            <p className='text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block '>Cancel</p>
+          </div>
+          <div className='flex gap-x-2'>
+            <button className='text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block '
+              onClick={() => {
+                router.push('/catelog')
+              }}>Save as Draft</button>
+            <button className='text-white text-xs  font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#008296] inline-block '
+              onClick={() => {
+                router.push('/catelog')
+              }}>
+              Save And Next
+            </button>
+          </div>
+        </div>
 
       </div>
     </div>

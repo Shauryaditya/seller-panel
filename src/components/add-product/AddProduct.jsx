@@ -24,8 +24,9 @@ const AddProduct = () => {
         const queryParams = new URLSearchParams(window.location.search);
         const id = queryParams.get('id')
         setId(id);
+        let sellerId = localStorage.getItem('userId')
         setFormData((preValue) => {
-            return { ...preValue, category_id: id, seller_id: '6468bcda3183f9f88c0e1ca8' }
+            return { ...preValue, category_id: id, seller_id: sellerId }
         })
         console.log(id)
     }, []);
