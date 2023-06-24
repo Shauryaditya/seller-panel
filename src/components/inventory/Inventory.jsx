@@ -1,24 +1,35 @@
 import React, { useState, useEffect } from 'react'
 import Varition from './Variation'
 import InventoryItem from './InventoryItem'
+import axios from '@/api/axios'
 import InventoryTop from './InventoryTop'
 import InventoryFilter from './InventoryFilter'
 const BASE_URL = "https://two1genx.onrender.com";
 const Inventory = () => {
     const [selectedOption, setSelectedOption] = useState('option')
     // Api data state
+    // state for tokem
+
     const [inventory, setInventory] = useState([])
-    function fetchInventoryData(apiUrl) {
-        fetch(apiUrl)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data.inventoryList);
-                setInventory(data.inventoryList)
-            })
+    async function fetchInventoryData(apiUrl, accessToken) {
+        try {
+            const response = await axios.get(apiUrl, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            const data = response.data;
+            console.log(data.inventoryList);
+            setInventory(data.inventoryList);
+        } catch (error) {
+            console.log(error);
+            // Handle the error appropriately
+        }
     }
     useEffect(() => {
+        const token = localStorage.getItem('access_token')
         const apiUrl = `${BASE_URL}/v1/inventory/get-page?page=1&limit=20&sort[createdAt]=1`;
-        fetchInventoryData(apiUrl);
+        fetchInventoryData(apiUrl, token);
     }, [])
     // For checkbox    
     const [checkedItems, setCheckedItems] = useState([]);
@@ -36,22 +47,22 @@ const Inventory = () => {
     const handleFilter = (filter) => {
         if (filter === 'active') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=active&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl);
+            fetchInventoryData(apiUrl, accessToken);
         } else if (filter === 'inactive') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=inactive&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl);
+            fetchInventoryData(apiUrl, accessToken);
         } else if (filter === 'incomplete') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=draft&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl);
+            fetchInventoryData(apiUrl, accessToken);
         } else if (filter === 'removed') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=unlisted&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl);
+            fetchInventoryData(apiUrl, accessToken);
         } else if (filter === 'suppressed') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=suppressed&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl);
+            fetchInventoryData(apiUrl, accessToken);
         } else {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl);
+            fetchInventoryData(apiUrl, accessToken);
         }
         console.log(filter);
     }

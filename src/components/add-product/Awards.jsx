@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import Loader from "../Loader";
 const BASE_URL = "https://two1genx.onrender.com";
 import LeftSide from "./LeftSide";
 
 const ProductAwards = (props) => {
   const { setSelectedTab, draftedTabs, setDraftedTabs, setFormData } = props;
+  // state for loading
+  const [isLoading, setIsLoading] = useState(false)
+
   const [awards, setAwards] = useState([]);
   const [award, setAward] = useState("");
   const [certificate, setCertificate] = useState(null);
@@ -38,6 +42,7 @@ const ProductAwards = (props) => {
   };
 
   const handleCertificateSubmit = (e) => {
+    setIsLoading(true)
     e.preventDefault();
 
     const file = certificate;
@@ -57,12 +62,17 @@ const ProductAwards = (props) => {
         }
       )
       .then((response) => {
+        if (response.status === 200) {
+          setIsLoading(false)
+        }
         setCertificateResponse((preValue) => {
           return [...preValue, response.data];
         });
         console.log(response.data);
       })
       .catch((error) => {
+        setIsLoading(false)
+        alert(error)
         // Handle any errors that occurred during the upload
         console.error(error);
       });
@@ -195,7 +205,11 @@ const ProductAwards = (props) => {
                   onClick={handleCertificateSubmit}
                   className="px-8 rounded-md bg-[#e5f2f4]"
                 >
-                  Add
+
+                  {
+                    isLoading ?
+                      <Loader /> : 'Upload'
+                  }
                 </button>
               </div>
             </div>

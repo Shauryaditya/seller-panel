@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react'
 import AddQuantityDiscount from './AddQuantityDiscount';
 const BASE_URL = "https://two1genx.onrender.com";
 const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, dataLength }) => {
+    // state for tokem
+    const [accessToken, setAccessToken] = useState(null)
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        setAccessToken(token)
+    }, [])
     console.log(data)
     console.log(checkedItems);
     useEffect(() => {
@@ -55,7 +61,7 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
         setSelectedOption(event.target.value);
     }
     // Udating bussiness price to database
-    const handleBussinessPrice = (e, id) => {
+    const handleBussinessPrice = (e, id, accessToken) => {
         e.preventDefault();
         const data = {
             business_price: business_price // replace with the actual new price_shipping_cost
@@ -63,7 +69,7 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
             body: JSON.stringify(data)
         };
 
@@ -75,7 +81,7 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
         console.log(business_price);
 
     }
-    const handlePriceShippingCost = (e, id) => {
+    const handlePriceShippingCost = (e, id, accessToken) => {
         console.log(id);
         e.preventDefault();
         const data = {
@@ -85,7 +91,7 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
             body: JSON.stringify(data)
         };
 
@@ -97,7 +103,7 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
     }
 
     const [qty_available, setQty] = useState()
-    const handleQuantity = (e) => {
+    const handleQuantity = (e, accessToken) => {
         setQty(e.target.value)
         console.log(e.target.value);
         const data = {
@@ -106,7 +112,10 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
             body: JSON.stringify(data)
         };
 
@@ -162,14 +171,14 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
             <td>
                 <div className='flex justify-center '>
                     <input
-                        onChange={handleQuantity}
+                        onChange={(e) => handleQuantity(e, accessToken)}
                         type='number' min='0' value={qty_available} className='w-14  border rounded py-2  text-xs text-gray-900 text-center font-normal' />
                 </div>
             </td>
             <td className="px-2 py-4"></td>
             <td className="px-2 ">
                 <div className='my-1 px-2'>
-                    <form onSubmit={(e) => handlePriceShippingCost(e, id)}>
+                    <form onSubmit={(e) => handlePriceShippingCost(e, id, accessToken)}>
                         <div className='flex flex-col '>
                             <p className='text-teal-500 font-normal whitespace-nowrap block' >List Price</p>
                             <input
@@ -200,7 +209,7 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
 
                 <div
                     className='px-2'>
-                    <form onSubmit={(e) => handleBussinessPrice(e, id)}>
+                    <form onSubmit={(e) => handleBussinessPrice(e, id, accessToken)}>
                         <input
                             onChange={(e) => setBussinessCost(e.target.value)}
                             value={business_price}

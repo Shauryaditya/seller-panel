@@ -1,9 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from "axios";
+import Loader from '../Loader';
 const BASE_URL = "https://two1genx.onrender.com";
 const VariationImage = ({ item }) => {
-    const [isClicked, setIsClicked] = useState(false)
+    // state for token
+    const [accessToken, setAccessToken] = useState(null)
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        setAccessToken(token)
+    }, [])
 
+    const [isClicked, setIsClicked] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [main_img, setMain_img] = useState("");
     const [img_2, setImg_2] = useState("");
     const [img_3, setImg_3] = useState("");
@@ -66,7 +74,8 @@ const VariationImage = ({ item }) => {
             }
         };
     };
-    const handleSubmit = (event, id) => {
+    const handleSubmit = (event, id, accessToken) => {
+        setIsLoading(true)
         console.log("hii");
         event.preventDefault();
         const data = {
@@ -82,12 +91,23 @@ const VariationImage = ({ item }) => {
         };
         console.log(data);
         axios
-            .post(`${BASE_URL}/v1/product-images/add`, data)
+            .post(`${BASE_URL}/v1/product-images/add`, data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`  // Replace YOUR_TOKEN_HERE with your actual Bearer token
+                }
+            })
             .then((response) => {
+                if (response.status === 200) {
+                    alert('Image Udloaded Successfully')
+                    setIsLoading(false)
+                }
                 console.log(response);
             })
             .catch((error) => {
                 console.log(error);
+                setIsLoading(false)
+                alert(error)
             });
     };
 
@@ -105,7 +125,7 @@ const VariationImage = ({ item }) => {
                 </div>
             </div>
             <div className="mt-4 gap-4 ">
-                <form onSubmit={(e) => handleSubmit(e, item._id)} className="">
+                <form onSubmit={(e) => handleSubmit(e, item._id, accessToken)} className="">
                     <div className="grid grid-cols-4 grid-flow-row gap-4 px-8 py-6">
                         <div className="relative">
                             <input
@@ -386,12 +406,16 @@ const VariationImage = ({ item }) => {
                         className="text-white text-xs  font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#008296] inline-block "
                         type="submit"
                     >
-                        Upload
+
+                        {
+                            isLoading ?
+                                <Loader /> : 'Upload'
+                        }
                     </button>
 
                     </div>
                 </form>
-            </div >
+            </div>
         </div >
     )
 }

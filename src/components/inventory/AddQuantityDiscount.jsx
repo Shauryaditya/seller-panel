@@ -2,6 +2,13 @@ import React, { useEffect, useState, useRef } from 'react'
 const BASE_URL = "https://two1genx.onrender.com";
 const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
 
+    // state for tokem
+    const [accessToken, setAccessToken] = useState(null)
+    useEffect(() => {
+        const token = localStorage.getItem('access_token')
+        setAccessToken(token)
+    }, [])
+
     const { min_qty1, max_qty1, min_qty2, max_qty2, min_qty3, max_qty3, fixed_price1, fixed_price2, fixed_price3, percent_off1, percent_off2, percent_off3, business_discount_type } = data
 
     // state for percentage discount
@@ -28,7 +35,7 @@ const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
 
     }
     // handling percentage off form and posting to api
-    const handlePercentOff = (e) => {
+    const handlePercentOff = (e, accessToken) => {
         e.preventDefault();
         const data = {
             min_qty1: minMaxQty.min_qty1,
@@ -45,7 +52,7 @@ const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
 
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
             body: JSON.stringify(data)
         };
 
@@ -55,7 +62,7 @@ const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
             .catch(error => console.log(error));
 
     }
-    const handleFixedPrice = (e) => {
+    const handleFixedPrice = (e, accessToken) => {
         e.preventDefault();
         const data = {
             min_qty1: minMaxQty.min_qty1,
@@ -72,7 +79,7 @@ const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
         console.log(data);
         const requestOptions = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${accessToken}` },
             body: JSON.stringify(data)
         };
 
@@ -151,7 +158,7 @@ const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
                     <label htmlFor="radio-1" className="ml-2 text-sm font-medium text-gray-900">Percent off business price</label>
                 </div>
                 <form
-                    onSubmit={handlePercentOff}
+                    onSubmit={(e) => handlePercentOff(e, accessToken)}
                     className={`px-2 ${selectedValue === 'percent' ? 'block' : 'hidden'}`}>
                     <div className='flex py-2 justify-around border-b-2 border-solid border-gray-300'>
                         <div className='flex gap-1'>
@@ -264,7 +271,7 @@ const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
                         <label htmlFor="radio-2" className="ml-2 text-sm font-medium text-gray-900">Fixed prices</label>
                     </div>
                     <form
-                        onSubmit={handleFixedPrice}
+                        onSubmit={(e) => handleFixedPrice(e, accessToken)}
                         className={`px-2  ${selectedValue === 'fixed' ? 'block' : 'hidden'}`} >
                         <div className='flex py-2 justify-around border-b-2 border-solid border-gray-300'>
                             <div className='flex gap-1'>

@@ -10,6 +10,9 @@ const MoreDetails = (props) => {
         setFilter(data)
         console.log(data);
     }
+
+    //state for token
+    const [accessToken, setAccessToken] = useState('')
     // fetching  field from backend
     const [moreDetails, setMoreDetails] = useState(null)
     useEffect(() => {
@@ -42,6 +45,8 @@ const MoreDetails = (props) => {
                 console.log(error);
             }
         }
+        const token = localStorage.getItem('access_token')
+        setAccessToken(token)
         fetchData();
     }, [filter])
     // state variables for form inputs
@@ -83,14 +88,15 @@ const MoreDetails = (props) => {
         setFormData({ ...obj })
         console.log(formData);
 
-        async function sendData(url, formData) {
+        async function sendData(url, formData, accessToken) {
             console.log(JSON.stringify(formData));
 
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`
                     },
                     body: JSON.stringify(formData)
                 });
@@ -108,7 +114,7 @@ const MoreDetails = (props) => {
             }
         }
 
-        sendData(`${BASE_URL}/v1/products/add`, formData)
+        sendData(`${BASE_URL}/v1/products/add`, formData, accessToken)
     }
 
     return (

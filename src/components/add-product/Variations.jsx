@@ -15,6 +15,12 @@ const Variations = (props) => {
     variationsResponse
   } = props;
 
+  // state for token
+  const [accessToken, setAccessToken] = useState(null)
+  useEffect(() => {
+    const token = localStorage.getItem('access_token')
+    setAccessToken(token)
+  }, [])
   const [selectedVariation, setSelectedVariation] = useState([]);
   console.log(selectedVariation);
   useEffect(() => {
@@ -135,7 +141,7 @@ const Variations = (props) => {
   };
   console.log(data);
 
-  const handleAddVariation = async (variationData) => {
+  const handleAddVariation = async (variationData, accessToken) => {
     const url = `${BASE_URL}/v1/products/add-variation`;
     const requestData = {
       parent_id: productId,
@@ -147,6 +153,7 @@ const Variations = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify(requestData),
       });
@@ -405,7 +412,7 @@ const Variations = (props) => {
               <div className="flex justify-between bg-gray-100">
                 <div className="flex gap-2 px-5 py-2">
                   <button
-                    onClick={() => handleAddVariation(data)}
+                    onClick={() => handleAddVariation(data, accessToken)}
                     className="px-6 py-2 bg-blue-50 text-sm text-blue-900 shadow-[0px,1px,2px,#B5B5B5] rounded border border-solid border-blue-50 cursor-pointer"
                   >
                     Apply Changes
