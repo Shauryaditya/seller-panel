@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation'
 import "./css/register.css";
@@ -58,7 +59,11 @@ export const SignupForm = () => {
             const responseData = await response.json();
             console.log(responseData);
             if (response.ok) {
-                router.push('/auth/login')
+                // Removing items from localStorage
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+                localStorage.removeItem('userId');
+                router.push('/')
             }
             // Process the response data as needed
         } catch (error) {

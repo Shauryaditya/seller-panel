@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import LeftSide from "./LeftSide";
 import useAuth from "@/hook/useAuth";
+import { redirect } from "next/dist/server/api-utils";
 const BASE_URL = "https://two1genx.onrender.com";
 const seller_id = "6468bcda3183f9f88c0e1ca8";
 const ProductIdentity = (props) => {
+  const router = useRouter()
   const { auth } = useAuth();
   const { setSelectedTab, formData, setFormData, draftedTabs, setDraftedTabs, id, } = props;
 
@@ -51,7 +54,7 @@ const ProductIdentity = (props) => {
           }
         });
         setVariants(products);
-        console.log(products);
+
       })
       .catch((err) => console.error(err));
   }, [option]);
@@ -124,10 +127,11 @@ const ProductIdentity = (props) => {
     }
   };
   const handleCancel = () => {
-    window.location.href = '/seller-panel/catelog';
+    router.push('/catelog')
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const obj = formData;
     for (const [key, value] of Object.entries(formState)) {
       obj[`${key}`] = value;
