@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import LeftSide from "./LeftSide";
 import useAuth from "@/hook/useAuth";
 import { redirect } from "next/dist/server/api-utils";

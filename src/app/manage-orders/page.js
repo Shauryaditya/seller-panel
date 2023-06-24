@@ -1,8 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import BrandRegistrationForm from '@/components/brand-registration/BrandRegistrationForm'
+import ManageOrders from '@/components/manage-orders/ManageOrders'
 import Footer from '@/components/Footer'
-import useAuth from '@/hook/useAuth'
 import { redirect } from 'next/navigation'
 const page = () => {
     const [token, setToken] = useState(null)
@@ -17,14 +16,16 @@ const page = () => {
         }
     }, []);
     if (token !== null) {
+
         return (
             <div>
-                <BrandRegistrationForm />
+                <ManageOrders />
                 <Footer />
             </div>
+
         )
     }
-}
 
+}
 
 export default page

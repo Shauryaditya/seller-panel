@@ -3,7 +3,9 @@ import React from 'react'
 import Image from 'next/image'
 const Footer = () => {
     return (
-        <div className="bg-[#F5F9FA] flex flex-col px-5">
+        <div className="bg-[#F5F9FA] flex flex-col px-5 static
+        inset-x-0
+        bottom-0">
             <div className='flex justify-between border-b border-solid border-gray-300'>
                 <div>
                     <Link href='/'><Image src='/assets/seller-logo.png' width={50} height={50}></Image></Link>
@@ -11,7 +13,7 @@ const Footer = () => {
                 <div className='flex gap-x-5 items-center text-sm text-gray-900'>
                     <Link href='/select-category'>Add Product</Link>
                     <Link href='/inventory'>Manage Inventory</Link>
-                    <Link href='/inventory'>Manage Order</Link>
+                    <Link href='/manage-orders'>Manage Order</Link>
                     <Link href='/'>Profile</Link>
                 </div>
             </div>

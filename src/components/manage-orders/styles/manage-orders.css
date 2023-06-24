@@ -1,0 +1,14 @@
+.datepicker-wrapper input{
+    width: 80px;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    padding: 4px;
+}
+
+.datepicker-wrapper svg{
+    height: 20px;
+}
+
+.datepicker-wrapper button{
+    padding: 4px;
+}
