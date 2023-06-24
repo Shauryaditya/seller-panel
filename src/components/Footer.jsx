@@ -3,7 +3,7 @@ import React from 'react'
 import Image from 'next/image'
 const Footer = () => {
     return (
-        <div className="bg-[#F5F9FA] flex flex-col px-5 static
+        <footer className="bg-[#F5F9FA] flex flex-col px-5 static
         inset-x-0
         bottom-0">
             <div className='flex justify-between border-b border-solid border-gray-300'>
@@ -36,7 +36,7 @@ const Footer = () => {
                     <p className='text-sm text-gray-700'>Copyright ©2022 21genx.com</p>
                 </div>
             </div>
-        </div>
+        </footer>
     )
 }
 
