@@ -314,10 +314,10 @@ const Variations = (props) => {
                 <div className="w-1/2 flex justify-center gap-x-5">
                   {colorArray.map((color, index) => (
                     <div
-                      className="flex justify-center items-center px-3 py-1 rounded-sm border border-solid border-gray-300  "
+                      className="flex justify-between items-center px-3 py-1 rounded-sm border border-solid border-gray-300  "
                       key={index}
                     >
-                      <p className="text-base text-blue-900">{color}</p>
+                      <p className="text-xs text-blue-900">{color}</p>
 
                       <svg
                         onClick={() => removeColor(index)}
@@ -326,7 +326,7 @@ const Variations = (props) => {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        className="w-4 h-4"
                       >
                         <path
                           strokeLinecap="round"
@@ -345,7 +345,7 @@ const Variations = (props) => {
                   selectedVariation[1] !== undefined &&
 
                   <div className="w-1/2 flex gap-x-4 justify-center items-center">
-                    <label className="text-base text-blue-900 capitalize">
+                    <label className=" text-blue-900 capitalize">
                       {selectedVariation[1]?.slice(0, -19)} ?
                     </label>
                     <input
@@ -365,10 +365,10 @@ const Variations = (props) => {
                 <div className="w-1/2 flex justify-center gap-x-5">
                   {styleArray.map((style, index) => (
                     <div
-                      className="flex justify-end items-center px-3 py-1 rounded-sm border border-solid border-gray-300 text-blue-900"
+                      className="flex justify-between items-center px-3 py-1 rounded-sm border border-solid border-gray-300 text-blue-900"
                       key={index}
                     >
-                      <p className=" text-blue-900">{style}</p>
+                      <p className="text-xs text-blue-900">{style}</p>
                       <svg
                         onClick={() => removeStyle(index)}
                         xmlns="http://www.w3.org/2000/svg"
@@ -376,7 +376,7 @@ const Variations = (props) => {
                         viewBox="0 0 24 24"
                         strokeWidth="1.5"
                         stroke="currentColor"
-                        className="w-6 h-6"
+                        className="w-4 h-4"
                       >
                         <path
                           strokeLinecap="round"
