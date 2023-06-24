@@ -14,7 +14,7 @@ const Upload = ({ productId, variationResData, formData }) => {
     <div className="flex">
       <LeftSide />
 
-      <div className="flex flex-col mb-10">
+      <div className="flex flex-col mb-10 relative">
         <section>
           <div className="max-w-6xl mx-auto flex text-xs items-center bg-[#E5F2F4]">
             <div className="p-5">
@@ -58,24 +58,26 @@ const Upload = ({ productId, variationResData, formData }) => {
               id={productId}
             /> : null
         }
-
-        <div className='flex justify-between max-w-5xl  mx-5'>
-          <div>
-            <p className='text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block '>Cancel</p>
+        {
+          (variationResData.length !== 0 || productId) &&
+          <div className='absolute inset-x-0 bottom-0 flex justify-between max-w-5xl py-5 mx-5'>
+            <div>
+              <p className='text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block '>Cancel</p>
+            </div>
+            <div className='flex gap-x-2'>
+              <button className='text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block '
+                onClick={() => {
+                  router.push('/catelog')
+                }}>Save as Draft</button>
+              <button className='text-white text-xs  font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#008296] inline-block '
+                onClick={() => {
+                  router.push('/catelog')
+                }}>
+                Save And Next
+              </button>
+            </div>
           </div>
-          <div className='flex gap-x-2'>
-            <button className='text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block '
-              onClick={() => {
-                router.push('/catelog')
-              }}>Save as Draft</button>
-            <button className='text-white text-xs  font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#008296] inline-block '
-              onClick={() => {
-                router.push('/catelog')
-              }}>
-              Save And Next
-            </button>
-          </div>
-        </div>
+        }
 
       </div>
     </div>
