@@ -177,7 +177,7 @@ const Offer = (props) => {
               </div>
 
               <div className="flex justify-between max-w-5xl  mx-5">
-                <div>
+                <div className="flex items-center">
                   <p className="text-indigo-900 text-xs font-normal border border-solid border-[#E3ECED] shadow-[0px,1px,2px,#B5B5B5] rounded-sm py-2 px-6 bg-[#E3ECED] inline-block ">
                     Cancel
                   </p>
