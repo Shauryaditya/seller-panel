@@ -383,7 +383,7 @@ const AddQuantityDiscount = ({ onClose, bussinessPrice, id, data }) => {
                         </div>
                     </form>
                 </div>
-            </div >
+            </div>
 
         </div >
     )

@@ -250,7 +250,7 @@ export const Login = () => {
                         <p className={`text-xs  text-center ${isOptSent ? 'text-green-500' : 'text-red-500'}`}>{error}</p>
                     }
                     <div className="flex justify-center gap-5 py-2">
-                        <Link href="/signup" className="text-xs text-[#333333]">Forgot Password</Link>
+                        <Link href="/auth/forgot-password" className="text-xs text-[#333333]">Forgot Password</Link>
                         <Link href="/signup" className="text-xs text-[#333333]">Create a new account</Link>
                     </div>
                 </form>

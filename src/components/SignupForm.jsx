@@ -63,7 +63,7 @@ export const SignupForm = () => {
                 localStorage.removeItem('access_token');
                 localStorage.removeItem('refresh_token');
                 localStorage.removeItem('userId');
-                router.push('/')
+                router.push('/signup/success')
             }
             // Process the response data as needed
         } catch (error) {
