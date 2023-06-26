@@ -130,6 +130,7 @@ const Offer = (props) => {
                     <input
                       className="grow py-1 px-3 border border-solid border-gray-300"
                       type='number'
+                      required
                       name='list_price'
                       value={formState['list_price'] || ""}
                       onChange={handleChange}
@@ -146,6 +147,7 @@ const Offer = (props) => {
                     <input
                       className="grow py-1 px-3 border border-solid border-gray-300"
                       type='number'
+                      required
                       name='max_retail_price'
                       value={formState['max_retail_price'] || ""}
                       onChange={handleChange}
