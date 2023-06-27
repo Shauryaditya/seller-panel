@@ -45,24 +45,25 @@ const Inventory = () => {
 
     // For filtering data
     const handleFilter = (filter) => {
+        const token = localStorage.getItem('access_token')
         if (filter === 'active') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=active&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl, accessToken);
+            fetchInventoryData(apiUrl, token);
         } else if (filter === 'inactive') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=inactive&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl, accessToken);
+            fetchInventoryData(apiUrl, token);
         } else if (filter === 'incomplete') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=draft&page=1&limit=20&sort[createdAt]=1`;
             fetchInventoryData(apiUrl, accessToken);
         } else if (filter === 'removed') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=unlisted&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl, accessToken);
+            fetchInventoryData(apiUrl, token);
         } else if (filter === 'suppressed') {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?filter[status][$eq]=suppressed&page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl, accessToken);
+            fetchInventoryData(apiUrl, token);
         } else {
             const apiUrl = `${BASE_URL}/v1/inventory/get-page?page=1&limit=20&sort[createdAt]=1`;
-            fetchInventoryData(apiUrl, accessToken);
+            fetchInventoryData(apiUrl, token);
         }
         console.log(filter);
     }
