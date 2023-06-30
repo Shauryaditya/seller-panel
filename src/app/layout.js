@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
       <body>
         <AuthProvider>
 
-          {/* <Navbar /> */}
+          <Navbar />
           <div className='main'>
             <div className='gradient' />
           </div>

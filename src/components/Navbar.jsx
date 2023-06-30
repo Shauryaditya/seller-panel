@@ -1,125 +1,65 @@
-// 'use client'
-// import React from "react";
-// import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-// import Modal from '@mui/material/Modal';
+'use client'
+import React, { useState } from 'react'
+import SideBarModal from './SideBarModal'
+const Navbar = () => {
+    const [isClicked, setIsClicked] = useState(false)
+    return (
+        <navbar>
+            <div className='relative py-2 px-4 flex justify-between items-center bg-[#002F36]'>
+                <div
+                    onClick={() => setIsClicked(true)}
+                    className='text-white'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+                    </svg>
 
-// function Navbar() {
-//     const [open, setOpen] = React.useState(false);
-//     const handleOpen = () => setOpen(true);
-//     const handleClose = () => setOpen(false);
-//     const userEmail = localStorage.getItem("email");
+                </div>
+                <div>
+                    <div className='flex rounded'>
+                        <input type='text' name='search' className=' outline-0 py-[2px] px-2 bg-[#00829699] text-white' />
+                        <button type='' className='bg-[#008296] text-white py-[2px] px-2'>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
 
-//     const style = {
-//         position: 'absolute',
-//         top: '75px',
-//         right: '0',
-//         mr: '80px',
-//         height: '300px',
-//         width: '410px',
-//         bgcolor: 'background.paper',
-//         boxShadow: '24px 36px 64px -14px rgba(161, 161, 165, 0.15)',
-//         pt: '11px',
-//         outline: 'none',
-//         border: '1px solid #F5F5F7',
-//         borderRadius: "8px"
-//     };
-//     return (<div>
-//         <section class="container-fluid shadow-2xl border">
-//             <div class="container mx-auto flex flex-col md:flex-row items-center place-content-between py-4 gap-y-2">
-//                 <div class="flex flex-row gap-x-2">
-//                     <img class="w-12 border-4 border-black rounded-full" src="./img/awards-logo1.png" alt="" />
-//                     <div class="h-[35px] border-l-2 border-[#D2D2D7]"></div>
-//                     <p class="inline-flex border p-2 bg-[#F5F5F7] rounded-md px-6 cursor-pointer items-center"><img src="./img/svg/map-pin.svg" alt="" /><span class="text-[#87878C]">Ship to &nbsp;</span>Brisbane, Queensland </p>
-//                 </div>
-//                 <div class="flex ">
-//                     <img class="w-full" src="./logo.png" alt="" />
-//                 </div>
-//                 <div class="flex flex-row gap-x-6">
-//                     <a href="" class="flex inline-flex hover:scale-125 active:scale-75 duration-700">
-//                         <img class="mt-3" src="/img/svg/bell.svg" alt="" />
-//                         <div class="bg-[#D0011B] text-white text-base h-fit -ml-4 rounded-full px-1 font-bold border-[4px] border-white animate-pulse"> 10</div>
-//                     </a>
-//                     <a href="" class="flex inline-flex hover:scale-125 active:scale-75 duration-300">
-//                         <img class="mt-3" src="/img/svg/heart.svg" alt="" />
-//                         <p class="bg-[#D0011B] text-white text-base h-fit -ml-4 rounded-full px-1 font-bold border-[4px] border-white animate-pulse">15</p>
-//                     </a>
-//                     <a href="" class="flex inline-flex hover:scale-125 active:scale-75 duration-300">
-//                         <img class="mt-3" src="/img/svg/cart.svg" alt="" />
-//                         <p class="bg-[#D0011B] text-white text-base h-fit -ml-4 rounded-full px-1 font-bold border-[4px] border-white animate-pulse">20</p>
-//                     </a>
-//                     <div class="border-l-2 border-[#D2D2D7]">
-//                         {/* {userEmail &&
-//                   <a href="/user" class="inline-flex items-center"> */}
-//                         <div class="inline-flex items-center w-[129px] h-[48px] bg-[#F5F5F7]" style={{ borderRadius: "8px" }}>
-//                             <img class="w-12 rounded-full" src="./img/profile-img.png" alt="" />&nbsp;
-//                             <p class="font-bold hidden lg:block" onClick={handleOpen}>Manda <span class="text-[10px]">▼</span></p>
-//                         </div>
-//                         {/* </a>} */}
-//                         {!userEmail &&
-//                             <div class="flex flex-row items-center justify-center">
-//                                 <a class="text-sm font-medium px-4 py-2 rounded-md border-2 border-[#1D1D1F] mx-2" href="/log-in">Sign in</a>
-//                                 <a class="text-sm font-medium px-4 py-2 bg-[#1D1D1F] text-[#fff] rounded-md border-2 border-[#1D1D1F] mx-2" href="/register">Register</a>
-//                             </div>}
+                        </button>
+                    </div>
+                </div>
+                <div className='flex gap-5 items-center text-white'>
+                    <div >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        </svg>
 
-//                     </div>
-//                 </div>
-//                 {open && <Modal
-//                     open={open}
-//                     onClose={handleClose}
-//                     aria-labelledby="modal-modal-title"
-//                     aria-describedby="modal-modal-description"
-//                 >
-//                     <Box sx={style}>
-//                         <div class="mx-[30px] mt-[15px] mb-[10px]">
-//                             <div class="flex flex-row items-center justify-between pb-4" style={{ borderBottom: "1px solid #ECECEE" }}>
-//                                 <div class="flex items-center">
-//                                     <div>
-//                                         <img class="w-12 rounded-full" src="./img/profile-img.png" alt="" />
-//                                     </div>
-//                                     <div class="flex flex-col">
-//                                         <p class="font-bold hidden lg:block ml-1.5 font-black not-italic text-lg">Manda</p>
-//                                         <div class="flex flex-row  ml-1.5">
-//                                             <img src="./img/star.png" alt="star" />
-//                                             <p class="text-[#87878C] not-italic font-medium text-xs ml-0.5">MEMBER</p>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                                 <div class="flex items-center justify-center w-10 h-10 bg-[#F5F5F7] rounded-lg">
-//                                     <img src="./img/setting.png" alt="settings" />
-//                                 </div>
-//                             </div>
-//                             <div class="pb-4" style={{ borderBottom: "1px solid #ECECEE" }}>
-//                                 <div class="flex flex-row mt-3.5">
-//                                     <img src="../img/genx.png" />
-//                                     <p class="text-sm text-[ #1D1D1F] font-medium ml-3">My Genx</p>
-//                                 </div>
-//                                 <div class="flex flex-row mt-3.5">
-//                                     <img src="../img/wishlist.png" alt="wishlist" />
-//                                     <p class="text-sm text-[ #1D1D1F] font-medium ml-3">Wishlist</p>
-//                                     <p className="pl-[16rem] text-sm text-[ #1D1D1F] font-black">22</p>
-//                                 </div>
-//                                 <div class="flex flex-row mt-3.5">
-//                                     <img src="../img/vouchers.png" alt="vouchers" />
-//                                     <p class="text-sm text-[ #1D1D1F] font-medium ml-3">Vouchers</p>
-//                                     <p className="pl-[16rem] text-sm text-[ #1D1D1F] font-black">3</p>
-//                                 </div>
-//                                 <div class="flex flex-row mt-3.5">
-//                                     <img src="../img/genx.png" />
-//                                     <p class="text-sm text-[ #1D1D1F] font-medium ml-3">Previous Orders</p>
-//                                 </div>
-//                             </div>
-//                             <div class="flex flex-row mt-3.5">
-//                                 <img src="../img/Logout.png" />
-//                                 <p class="text-sm text-[#87878C] font-medium ml-3">Sign Out</p>
-//                             </div>
-//                         </div>
-//                     </Box>
-//                 </Modal>}
-//             </div>
-//         </section>
+                    </div>
+                    <div>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
 
-//     </div>)
-// }
-// export default Navbar;
+                    </div>
+                    <div className='flex'>
+                        <select className='bg-[#002F36] outline-0'>
+                            <option value="En">EN</option>
+                            <option value="Hi">HI</option>
+                        </select>
+
+
+                    </div>
+                    <div>
+                        <p className='text white text-sm'>Help</p>
+                    </div>
+                </div>
+                {
+                    isClicked && <SideBarModal
+                        isClicked={isClicked}
+                        setIsClicked={setIsClicked}
+                    />
+                }
+            </div>
+        </navbar>
+    )
+}
+
+export default Navbar

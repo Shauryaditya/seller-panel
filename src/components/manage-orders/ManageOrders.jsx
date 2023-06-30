@@ -153,21 +153,51 @@ const ManageOrders = () => {
         setProductOptionalTemp({ ...obj })
     }
 
-    const getOrders = async () => {
-        const orders = await axios.get(`http://localhost:3000/v1/orders/get?days=${filters.days}&dateFrom=${filters.dateFrom}&dateTo=${filters.dateTo}&sortBy=${filters.sortBy}&searchBy=${filters.searchBy}&searchKeyword=${filters.searchKeyword}&perPage=${filters.dataPerPage}&pageNo=${filters.currentPage}`)
-        console.log(orders.data)
-        setOrderData(orders.data)
-        setFilteredData(orders.data)
+    const getOrders = async (token) => {
+        const url = 'https://two1genx.onrender.com/v1/order/getAllOrders/seller';
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data;
+            } else {
+                throw new Error('Request failed');
+            }
+        } catch (error) {
+            console.log('Error:', error.message);
+            // Handle error appropriately
+        }
+
+        // const orders = await axios.get(`http://localhost:3000/v1/orders/get?days=${filters.days}&dateFrom=${filters.dateFrom}&dateTo=${filters.dateTo}&sortBy=${filters.sortBy}&searchBy=${filters.searchBy}&searchKeyword=${filters.searchKeyword}&perPage=${filters.dataPerPage}&pageNo=${filters.currentPage}`)
+        // console.log(orders.data)
+
+        // setOrderData(orders.data)
+        // setFilteredData(orders.data)
     }
 
     const getOrderCount = async () => {
-        const orderCount = await axios.get(`http://localhost:3000/v1/orders/order-count`)
-        setTotalOrders(orderCount.data.ordercount)
+        // const orderCount = await axios.get(`http://localhost:3000/v1/orders/order-count`)
+        // setTotalOrders(orderCount.data.ordercount)
     }
 
     useEffect(() => {
-        getOrders()
-    }, [filters])
+        let token = localStorage.getItem('access_token')
+        getOrders(token)
+            .then(data => {
+                setOrderData(data.orderList)
+                console.log('seller order', data);
+            })
+            .catch(error => {
+                // Handle the error
+                console.error(error);
+            });
+
+    }, [filters, selectedTab])
 
     useEffect(() => {
         getOrderCount()

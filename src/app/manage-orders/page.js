@@ -20,7 +20,7 @@ const page = () => {
         return (
             <div>
                 <ManageOrders />
-                {/* <Footer /> */}
+                <Footer />
             </div>
 
         )

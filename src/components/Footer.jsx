@@ -4,8 +4,7 @@ import Image from 'next/image'
 const Footer = () => {
     return (
         <footer className="bg-[#F5F9FA] flex flex-col px-5 static
-        inset-x-0
-        bottom-0">
+        inset-x-0 bottom-0 ">
             <div className='flex justify-between border-b border-solid border-gray-300'>
                 <div>
                     <Link href='/'><Image src='/assets/seller-logo.png' width={50} height={50}></Image></Link>

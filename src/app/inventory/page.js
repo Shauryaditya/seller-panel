@@ -20,7 +20,7 @@ const page = () => {
         return (
             <div>
                 <Inventory />
-                {/* <Footer /> */}
+                <Footer />
             </div>
 
         )
