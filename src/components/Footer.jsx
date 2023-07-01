@@ -13,7 +13,7 @@ const Footer = () => {
                     <Link href='/select-category'>Add Product</Link>
                     <Link href='/inventory'>Manage Inventory</Link>
                     <Link href='/manage-orders'>Manage Order</Link>
-                    <Link href='/'>Profile</Link>
+                    <Link href='/profile'>Profile</Link>
                 </div>
             </div>
             <div className='flex justify-between py-3'>

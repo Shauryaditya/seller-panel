@@ -1,8 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Inventory from '@/components/inventory/Inventory'
-import Navbar from '@/components/Navbar'
+import SellerInfo from '@/components/seller-information/SellerInfo'
+import useAuth from '@/hook/useAuth'
 import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
 import { redirect } from 'next/navigation'
 const page = () => {
     const [token, setToken] = useState(null)
@@ -17,14 +18,12 @@ const page = () => {
         }
     }, []);
     if (token !== null) {
-
         return (
             <div>
                 <Navbar />
-                <Inventory />
+                <SellerInfo />
                 {/* <Footer /> */}
             </div>
-
         )
     }
 

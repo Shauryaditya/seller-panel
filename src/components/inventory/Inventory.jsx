@@ -149,7 +149,7 @@ const Inventory = () => {
                                     <th scope="col" className="px-2 py-3 font-bold"><p className='min-w-[80px]'>Free Preview</p></th>
                                     <th scope="col" className="px-2 py-3 text-teal-500 font-bold ">Price And Shipping Cost</th>
                                     <th scope="col" className="px-2 py-3 ">Bussines Price</th>
-                                    <th scope="col" className="px-2 py-3 "><a className="inline-block px-4 py-2  bg-yellow-100 rounded-full break-normal" href="/">Save all</a></th>
+                                    <th scope="col" className="px-2 py-3 "><p className="inline-block px-4 py-2  bg-yellow-100 rounded-full break-normal" href="/">Save all</p></th>
                                 </tr>
                             </thead>
                             <tbody>
