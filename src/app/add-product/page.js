@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import AddProduct from '@/components/add-product/AddProduct'
 import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
 import useAuth from '@/hook/useAuth'
 import { redirect } from 'next/navigation'
 const page = () => {
@@ -20,6 +21,7 @@ const page = () => {
 
         return (
             <div>
+                <Navbar />
                 <AddProduct />
                 <Footer />
             </div>

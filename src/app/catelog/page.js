@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import CatelogHome from '@/components/catelog/CatelogHome'
 import { redirect } from 'next/navigation'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 const page = () => {
     const [token, setToken] = useState(null)
@@ -19,6 +20,7 @@ const page = () => {
 
         return (
             <div>
+                <Navbar />
                 <CatelogHome />
                 <Footer />
             </div>

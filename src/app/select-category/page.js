@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ProductCategories from '@/components/add-product/ProductCategories'
 import useAuth from '@/hook/useAuth'
 import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
 import { redirect } from 'next/navigation'
 const page = () => {
     const [token, setToken] = useState(null)
@@ -19,6 +20,7 @@ const page = () => {
     if (token !== null) {
         return (
             <div>
+                <Navbar />
                 <ProductCategories />
                 <Footer />
             </div>

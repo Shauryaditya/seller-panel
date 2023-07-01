@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import ManageOrders from '@/components/manage-orders/ManageOrders'
 import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
 import { redirect } from 'next/navigation'
 const page = () => {
     const [token, setToken] = useState(null)
@@ -19,8 +20,9 @@ const page = () => {
 
         return (
             <div>
+                <Navbar />
                 <ManageOrders />
-                <Footer />
+                {/* <Footer /> */}
             </div>
 
         )

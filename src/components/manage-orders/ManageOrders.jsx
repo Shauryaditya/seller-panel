@@ -19,7 +19,7 @@ const ManageOrders = () => {
         days: "365",
         dateFrom: "",  // will only contain date if value of days = custom
         dateTo: "", // will only contain date if value of days = custom
-        sortBy: "ship-by-date-(descending)",
+        sortBy: 1,
         currentPage: 1,
         dataPerPage: 15,
         searchBy: "orderId",
@@ -27,6 +27,7 @@ const ManageOrders = () => {
         isBusinessCustomer: false
     }
     const [filters, setFilters] = useState(initialFilters)
+
     const [openModal, setOpenModal] = useState(false)
     const [checkedOrderIds, setCheckedOrderIds] = useState([])
     const [orderData, setOrderData] = useState(null)
@@ -100,14 +101,8 @@ const ManageOrders = () => {
             value: "custom"
         }]
     const shipByDate = [
-        { name: "Order date (ascending)", value: "orderDateAsc" },
-        { name: "Order date (descending)", value: "orderDateDesc" },
-        { name: "Ship-by date (ascending)", value: "shipByAsc" },
-        { name: "Ship-by date (descending)", value: "shipByDesc" },
-        { name: "Status (ascending)", value: "statusAsc" },
-        { name: "Status (descending)", value: "statusDesc" },
-        { name: "Shipping Service (ascending)", value: "shippingServiceAsc" },
-        { name: "Shipping Service (descending)", value: "shippingServiceDesc" }
+        { name: "Order date (ascending)", value: 1 },
+        { name: "Order date (descending)", value: -1 }
     ]
     const perPageOptions = [
         { name: "15", value: "15" },
@@ -153,8 +148,8 @@ const ManageOrders = () => {
         setProductOptionalTemp({ ...obj })
     }
 
-    const getOrders = async (token) => {
-        const url = 'https://two1genx.onrender.com/v1/order/getAllOrders/seller';
+    const getOrders = async (url, token) => {
+
         try {
             const response = await fetch(url, {
                 headers: {
@@ -186,10 +181,22 @@ const ManageOrders = () => {
     }
 
     useEffect(() => {
+        console.log(filteredData);
+        let url = ''
+        if (filteredData === null) {
+            url = `https://two1genx.onrender.com/v1/order/getAllOrders/seller?sort[order_date]=${filters.sortBy}&days=${filters.days}`;
+            console.log(url);
+        } if (filteredData === 'unpaid') {
+            url = `https://two1genx.onrender.com/v1/order/getAllOrders/seller?sort[order_date]=${filters.sortBy}&days=${filters.days}&filter[payment][$eq]=${filteredData}`;
+        } if (filteredData === 'cancel') {
+            url = `https://two1genx.onrender.com/v1/order/getAllOrders/seller?sort[order_date]=${filters.sortBy}&days=${filters.days}&filter[payment][$eq]=paid`;
+        }
+        console.log(url);
         let token = localStorage.getItem('access_token')
-        getOrders(token)
+        getOrders(url, token)
             .then(data => {
                 setOrderData(data.orderList)
+                setTotalOrders(data.totalCount)
                 console.log('seller order', data);
             })
             .catch(error => {
@@ -203,29 +210,29 @@ const ManageOrders = () => {
         getOrderCount()
     }, [])
 
-    const filterOrderData = (filter) => {
-        if (filter == "all")
-            setFilteredData(orderData)
-        else {
-            const obj = orderData
-            const filteredObj = obj.filter((item) => {
-                return item.orderStatus == filter
-            })
+    // const filterOrderData = (filter) => {
+    //     if (filter == "all")
+    //         setFilteredData(orderData)
+    //     else {
+    //         const obj = orderData
+    //         const filteredObj = obj.filter((item) => {
+    //             return item.orderStatus == filter
+    //         })
 
-            setFilteredData([...filteredObj])
-        }
-    }
+    //         setFilteredData([...filteredObj])
+    //     }
+    // }
 
     const handlePageChange = (event, value) => {
         const obj = filters
         obj.currentPage = value
         setFilters({ ...obj })
     };
-
+    // console.log('filterre data ', filteredData);
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <div class="mt-4 px-7 mb-12 pb-4 border-b border-[#cccccc]">
-                {console.log(filters)}
+
                 <div class="flex w-full">
                     <div class="flex w-[70%]">
                         <p class=" not-italic font-normal text-2xl items-center ">Manage Orders
@@ -259,22 +266,23 @@ const ManageOrders = () => {
                     </div>
                 </div>
                 <p class="pt-1.5 text-[#565959] text-[0.777rem] font-medium">fulfilled by 21 genx</p>
+                {/* // tab section */}
                 <div class="flex  border-b border-[#cccccc]">
                     <div class="flex flex-row items-start text-base font-normal text-[#007185]">
                         <p class={`mr-7 cursor-pointer py-2 ${selectedTab == 1 ? "font-medium border-b border-solid border-[#E77600]" : ""}`}
                             onClick={() => {
                                 setSelectedTab(1)
-                                filterOrderData("Payment_Pending")
+                                setFilteredData("unpaid")
                             }}>Pending</p>
                         <p class={`mr-7 cursor-pointer py-2 ${selectedTab == 2 ? "font-medium border-b border-solid border-[#E77600]" : ""}`}
                             onClick={() => {
                                 setSelectedTab(2)
-                                filterOrderData("all")
+                                setFilteredData(null)
                             }}>All orders</p>
                         <p class={`mr-7 cursor-pointer py-2 ${selectedTab == 3 ? "font-medium border-b border-solid border-[#E77600]" : ""}`}
                             onClick={() => {
-                                setSelectedTab(3)
-                                filterOrderData("Cancel")
+                                setSelectedTab(3);
+                                setFilteredData("cancel");
                             }}>Cancelled</p>
                     </div>
 
@@ -302,7 +310,7 @@ const ManageOrders = () => {
                                     }}>Hide filters</button>}
                                 {!isFilterVisible && <button class="text-xs font-bold text-[#fff] bg-[#303333] py-1" style={{ borderRadius: "20px", width: "90px", border: "1px solid #0F1111", boxShadow: "0px 2px 5px rgba(213, 217, 217, 0.5)" }}
                                     onClick={() => { setIsFilterVisible(true) }}>Show filters</button>}
-                                <p class="font-bold text-lg ml-2">{filteredData?.length} order(s)</p>
+                                <p class="font-bold text-lg ml-2">{orderData?.length} order(s)</p>
                                 <p class="ml-2 text-[0.779rem] text-[#AAAAAA]">Last {filters.days} days</p>
                             </div>
 
@@ -360,11 +368,22 @@ const ManageOrders = () => {
                             </div>}
                         </div>
 
-                        {selectedTab == 1 && filteredData != null && <Pending orders={filteredData} productDummy={productDummy} checkedIds={[...checkedOrderIds]} setCheckedIds={setCheckedOrderIds} orderOptionalFields={productOptionalFields} />}
-                        {selectedTab == 2 && filteredData != null && <Orders orders={filteredData} productDummy={productDummy} checkedIds={[...checkedOrderIds]} setCheckedIds={setCheckedOrderIds} orderOptionalFields={productOptionalFields} />}
-                        {selectedTab == 3 && filteredData != null && <Cancel orders={filteredData} productDummy={productDummy} checkedIds={[...checkedOrderIds]} setCheckedIds={setCheckedOrderIds} orderOptionalFields={productOptionalFields} />}
+                        {/* {(selectedTab == 1 && orderData) && <Pending orders={orderData} productDummy={productDummy} checkedIds={[...checkedOrderIds]} setCheckedIds={setCheckedOrderIds} orderOptionalFields={productOptionalFields} />
+                        } */}
+                        {
+                            orderData &&
+                            <Orders orders={orderData} productDummy={productDummy} checkedIds={[...checkedOrderIds]} setCheckedIds={setCheckedOrderIds} orderOptionalFields={productOptionalFields} />
+                        }
+                        {/* {
+                            (selectedTab == 3 && orderData) &&
+                            <Cancel
+                                orders={orderData}
+                                productDummy={productDummy}
+                                checkedIds={[...checkedOrderIds]} setCheckedIds={setCheckedOrderIds} orderOptionalFields={productOptionalFields}
+                            />
+                        } */}
 
-                        {filteredData != null && selectedTab == 2 &&
+                        {orderData && selectedTab == 2 &&
                             <div class="mt-4 ">
                                 <div class="flex flex-col items-center">
                                     <Stack spacing={2}>
@@ -419,7 +438,7 @@ const ManageOrders = () => {
                         </div>
 
                         <div class="flex flex-col items-start">
-                            <p class="mb-2 mb-2 text-base font-bold text-[ #0F1111] not-italic">Order details</p>
+                            <p class="mb-2  text-base font-bold text-[ #0F1111] not-italic">Order details</p>
                             <div class="flex justify-center mb-1"><input
                                 type="checkbox" class="mr-1" disabled checked />Order ID</div>
                             <div class="flex justify-center mb-1"><input
@@ -436,7 +455,7 @@ const ManageOrders = () => {
                         </div>
 
                         <div class="flex flex-col items-start">
-                            <p class="mb-2 mb-2 text-base font-bold text-[ #0F1111] not-italic">Product name</p>
+                            <p class="mb-2  text-base font-bold text-[ #0F1111] not-italic">Product name</p>
                             <div class="flex justify-center mb-1"><input
                                 type="checkbox" class="mr-1" disabled checked />Name</div>
                             <div class="flex justify-center mb-1"><input

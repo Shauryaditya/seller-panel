@@ -1,7 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { AuthProvider } from '@/context/AuthProvider'
-import Navbar from '@/components/Navbar'
 const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Create Next App',
@@ -15,7 +14,7 @@ export default function RootLayout({ children }) {
       <body>
         <AuthProvider>
 
-          <Navbar />
+
           <div className='main'>
             <div className='gradient' />
           </div>

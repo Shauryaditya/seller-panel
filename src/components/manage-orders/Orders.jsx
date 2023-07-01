@@ -47,7 +47,7 @@ const Orders = (props) => {
   return (
     <div class="mt-8">
       {orders.length == 0 && <div>No Order found</div>}
-      {orders.length != 0 &&
+      {orders.length &&
         <TableContainer component={Paper}>
           <Table>
             <TableHead>

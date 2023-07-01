@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import Inventory from '@/components/inventory/Inventory'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { redirect } from 'next/navigation'
 const page = () => {
@@ -19,6 +20,7 @@ const page = () => {
 
         return (
             <div>
+                <Navbar />
                 <Inventory />
                 <Footer />
             </div>
