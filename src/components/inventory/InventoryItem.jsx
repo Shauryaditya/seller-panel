@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link';
 import AddQuantityDiscount from './AddQuantityDiscount';
 const BASE_URL = "https://two1genx.onrender.com";
 const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, dataLength }) => {
@@ -236,18 +237,8 @@ const InventoryItem = ({ id, checkedItems, setCheckedItems, setSelectAll, data, 
                     }
                 </div>
             </td>
-            <td className='px-2 py-4'>
-                <a href='/'>
-                    <select
-                        className='bg-white rounded-md shadow-[0px_2px_5px_rgba(15,17,17,0.15)] px-4 py-1 outline-none'
-                        onChange={handleOptionChange}
-                    >
-                        <option value="option">Edit</option>
-                        <option value="Orange">Orange</option>
-                        <option value="Radish">Radish</option>
-                        <option value="Cherry">Cherry</option>
-                    </select>
-                </a>
+            <td className='px-4 py-4'>
+                <Link href='/inventory' className='bg-white rounded-md shadow-[0px_2px_5px_rgba(15,17,17,0.15)] px-4 py-1 text-center'>Edit</Link>
             </td>
         </tr>
     )

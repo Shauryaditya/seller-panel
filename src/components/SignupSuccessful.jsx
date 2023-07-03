@@ -25,7 +25,7 @@ const SignupSuccessful = () => {
                         <div className='flex justify-center items-center w-5 h-5 rounded-full bg-green-500 text-white'>&#x2713;</div>
                     </div>
                     <h3 className="text-base text-gray-700 font-semibold pb-8">Your account is being reviewed and confirmation will be sent to you within 24 hrs  </h3>
-
+                    <Link href='/auth/login' className='w-fit bg-blue-500 hover:bg-blue-700 text-white  py-3 px-32 rounded-full focus:outline-none focus:shadow-outline'>Login</Link>
                 </div>
             </div>
         </div>

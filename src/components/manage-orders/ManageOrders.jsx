@@ -96,10 +96,11 @@ const ManageOrders = () => {
             name: "Last 365 days",
             value: "365"
         },
-        {
-            name: "Custom date range",
-            value: "custom"
-        }]
+        // {
+        //     name: "Custom date range",
+        //     value: "custom"
+        // }
+    ]
     const shipByDate = [
         { name: "Order date (ascending)", value: 1 },
         { name: "Order date (descending)", value: -1 }

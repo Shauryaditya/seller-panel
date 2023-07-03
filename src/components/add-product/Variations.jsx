@@ -413,7 +413,7 @@ const Variations = (props) => {
                 <div className="flex gap-2 px-5 py-2">
                   <button
                     onClick={() => handleAddVariation(data, accessToken)}
-                    className="px-6 py-2 bg-blue-50 text-sm text-blue-900 shadow-[0px,1px,2px,#B5B5B5] rounded border border-solid border-blue-50 cursor-pointer"
+                    className="px-6 py-2 bg-blue-50 text-sm text-blue-900 shadow-[0px,1px,2px,#B5B5B5] rounded border border-solid border-blue-500 cursor-pointer "
                   >
                     Apply Changes
                   </button>
@@ -450,7 +450,7 @@ const Variations = (props) => {
           {/* Table  section */}
           <section>
             <div class="relative  shadow-md sm:rounded-lg">
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto pb-2">
                 {data.length !== 0 && (
                   <table class="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                     <thead class="bg-gray-100 text-xs uppercase text-gray-700">

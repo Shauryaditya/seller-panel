@@ -193,50 +193,57 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <div className="bg-[#FFFFFF]">
-        <div className="mt-20 mx-2 sm:mx-4 md:mx-20">
-          <p className="text-center font-extrabold">Experiences suppliers love to talk about</p>
-          <div className="flex1 lg:flex justify-center mt-10 ml-24">
-            <div>
-              <div className="ml-2 lg:ml-20">
-                <iframe src="../assets/seller-panel/video1.mp4" data-wf-ignore="false" muted></iframe>
-
+      <div className=" py-5 bg-[#FFFFFF]">
+        <div className="max-w-5xl mx-auto flex flex-col">
+          <p className="text-center font-semibold py-10">Experiences suppliers love to talk about</p>
+          <div className="grid  md:grid-cols-2  lg:grid-cols-3 gap-5 px-5">
+            <div className=''>
+              <div className='flex justify-center'>
+                <iframe className='w-full aspect-video' src="https://www.youtube.com/embed/8sLS2knUa6Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
               </div>
-              <p className="font-bold  p-0.5 ml-3 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24">Amit and Rajat Jain</p>
-              <p className="font-normal  p-0.5 ml-3 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24">Smartees Tiruppur</p>
-              <p className="font-light  p-0.5 ml-3 mb-2 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24 w-2/3">Our business has grown beyond
-                our imagination, getting upto
-                10,000 orders consistently during
-                sale days. We are now
-                constantly bringing new
-                products thanks to 21Genx’s
-                insights.</p>
+              <div className='p-5'>
+                <h3 className='font-semibold py-1 '>Amit and Rajat Jain</h3>
+                <p className='text-sm py-1 '>Smartees, Tiruppur</p>
+                <p className=''>Our business has grown beyond
+                  our imagination, getting upto
+                  10,000 orders consistently during
+                  sale days. We are now
+                  constantly bringing new
+                  products thanks to 21Genx’s
+                  insights.</p>
+              </div>
+            </div>
+            <div >
+              <div className='flex justify-center'>
+                <iframe className='w-full aspect-video' src="https://www.youtube.com/embed/8sLS2knUa6Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              </div>
+              <div className='py-5'>
+                <h3 className='font-semibold py-1 '>Amit and Rajat Jain</h3>
+                <p className='text-sm '>Smartees, Tiruppur</p>
+                <p className=''>Our business has grown beyond
+                  our imagination, getting upto
+                  10,000 orders consistently during
+                  sale days. We are now
+                  constantly bringing new
+                  products thanks to 21Genx’s
+                  insights.</p>
+              </div>
             </div>
             <div>
-              <div className="ml-2 lg:ml-5">
-                <iframe src="../assets/seller-panel/video2.mp4" data-wf-ignore="false" muted></iframe>
-
+              <div className='flex justify-center'>
+                <iframe className='w-full aspect-video' src="https://www.youtube.com/embed/8sLS2knUa6Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
               </div>
-              <p className="font-bold  p-0.5 ml-3 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24">Suman</p>
-              <p className="font-normal  p-0.5 ml-3 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24">Keshav Fashion, Hisar</p>
-              <p className="font-light  p-0.5 ml-3 mb-2 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24 w-2/3">I started selling on 21Genx with
-                4-5 orders on the very first day.
-                In no time I was getting over
-                1000 orders a day, like a dream
-                come true.</p>
-            </div>
-            <div>
-              <div className="ml-2 lg:ml-5">
-                <video src="../assets/seller-panel/video1.mp4" data-wf-ignore="true" muted controls></video>
+              <div className='p-5'>
+                <h3 className='font-semibold py-1'>Amit and Rajat Jain</h3>
+                <p className='text-sm py-1'>Smartees, Tiruppur</p>
+                <p className=''>Our business has grown beyond
+                  our imagination, getting upto
+                  10,000 orders consistently during
+                  sale days. We are now
+                  constantly bringing new
+                  products thanks to 21Genx’s
+                  insights.</p>
               </div>
-              <p className="font-bold  p-0.5 ml-3 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24">Mohit Rathi</p>
-              <p className="font-normal  p-0.5 ml-3 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24">Meira Jewellery,Ahmedabad</p>
-              <p className="font-light  p-0.5 ml-3 mb-2 sm:text-sm sm:p-1 sm:ml-5 md:p-2 md:ml-24 w-2/3">21Genx made it extremely
-                simple to transition to online
-                business during lockdown.
-                Suddenly we were all over India
-                to our surprise, seeing up to 5X
-                growth on sale days.</p>
             </div>
           </div>
         </div>

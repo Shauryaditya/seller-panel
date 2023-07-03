@@ -13,7 +13,7 @@ const LeftSide = (props) => {
         <div className='w-1/5 flex flex-col gap-y-5 p-10 bg-[#f4f9fb] min-h-screen'>
             <div>
                 <h1 className='text-base text-indigo-900 font-medium'>Category</h1>
-                <p className='text-xs text-teal-900'> {`.. > Baby Clothing > Baby Boys > Bodysuits`} </p>
+                <p className='text-xs text-teal-900'> {`.. > Parent Category > Sub Category > Child Category`} </p>
             </div>
             <form>
                 <div className='flex flex-col gap-y-3'>

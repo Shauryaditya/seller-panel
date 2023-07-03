@@ -117,7 +117,7 @@ const Signup = () => {
                 <form className="w-full px-5" onSubmit={handleSubmit} autoComplete="off">
                     <div>
                         <h1 className="text-2xl font-bold">Hello Again!</h1>
-                        <h3 className="text-xl font-semibold pb-8 pt-3">Sign in</h3>
+                        <h3 className="text-xl font-semibold pb-8 pt-3">Sign up</h3>
                     </div>
 
                     <div className="mb-2 border-b border-solid border-[#262626]">
@@ -162,7 +162,7 @@ const Signup = () => {
                             className="w-fit bg-blue-500 hover:bg-blue-700 text-white  py-3 px-32 rounded-full focus:outline-none focus:shadow-outline"
                             type="submit"
                         >
-                            Log In
+                            Continue
                         </button>
 
                     </div>
