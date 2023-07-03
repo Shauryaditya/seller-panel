@@ -43,6 +43,7 @@ const PhoneModal = ({ visible, onClose }) => {
             if (response.ok) {
                 // OTP sent successfully, redirect to OTP page
                 console.log("OTP sent successfully");
+    
             } else {
                 const errorData = await response.json();
                 console.error(errorData);
@@ -60,7 +61,7 @@ const PhoneModal = ({ visible, onClose }) => {
         const access_token = localStorage.getItem("access_token");
         try {
             const requestBody = {
-                phone: "+91" + { phone },
+                phone: "+91" +  phone ,
                 otp: Otp,
             };
             const res = await fetch(
