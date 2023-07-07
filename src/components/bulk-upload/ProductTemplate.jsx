@@ -10,7 +10,16 @@ const ProductTemplate = () => {
   const [subCategoryList, setSubCategoryList] = useState([]);
   const [childCategoryList, setChildCategoryList] = useState([]);
   const [parentList, setParentList] = useState([]);
+  const [path, setPath] = useState("");
+  const [childpath, setChildPath] = useState("");
+  const [selectedChildId, setSelectedChildId] = useState("");
 
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedsubCategory, setSelectedSubCategory] = useState(null);
+  const [selectedChildCategory, setSelectedChildCategory] = useState(null);
+  const [categoryId, setCategoryId] = useState("");
+
+  const [showproducts, setShowProducts] = useState(false);
   // State for parentlist data
 
   useEffect(() => {
@@ -24,9 +33,11 @@ const ProductTemplate = () => {
   }, []);
   // console.log(parentList);
 
-  const handleCategoryClick = (parentId) => {
+  const handleCategoryClick = (parentId, parentname) => {
     setSelectedParentId(parentId);
+    setPath(parentname);
   };
+
 
   useEffect(() => {
     if (selectedParentId) {
@@ -42,8 +53,10 @@ const ProductTemplate = () => {
     }
   }, [selectedParentId]);
 
-  const handleSubcategoryClick = (SubcategoryId) => {
+  const handleSubcategoryClick = (SubcategoryId, subCategoryname) => {
     setSelectedSubcategoryId(SubcategoryId);
+    const subPath = path + "/" + subCategoryname;
+    setPath(subPath);
   };
 
   useEffect(() => {
@@ -59,10 +72,48 @@ const ProductTemplate = () => {
       setChildCategoryList([]);
     }
   }, [selectedSubcategoryId]);
-  console.log(childCategoryList);
-  // const handleSubcategoryClick = (subcategory) => {
-  //   setSelectedSubcategory(subcategory);
-  // };
+  // console.log(childCategoryList);
+
+  const handleChildCategoryClick = (childId, childCategoryname) => {
+    setSelectedChildId(childId);
+    const ChildPath = path + "/" + childCategoryname;
+    setPath(ChildPath);
+    setChildPath(childCategoryname);
+  };
+ const handleGenerateTemplate = async () => {
+    const access_token = localStorage.getItem("access_token");
+    try {
+      const requestBody ={
+        category_id : categoryId,
+      };
+      const response = await fetch(' https://bulk-upload-excel.onrender.com/v1/excel/download-excel',{
+        method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${access_token}`,
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+
+      if (response.ok) {
+        // OTP sent successfully, redirect to OTP page
+        console.log("Download template");
+       
+      } else {
+        // const errorData = await res.json();
+        // console.error(errorData);
+        // setError(errorData.message.toString());
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Something went wrong.");
+    }
+  };
+
+
+
   return (
     <div className="max-w-screen-2xl mx-auto">
       <div className="flex flex-row p-2">
@@ -124,17 +175,16 @@ const ProductTemplate = () => {
           <div className="flex flex-col border-r">
             {parentList.map((category) => (
               <ul
-                className="w-80 p-2 border-r hover:bg-gray-100"
+                className={`w-80 p-2 border-r hover:bg-gray-100 ${selectedCategory === category._id ? 'bg-gray-100' : ''}`}
                 key={category._id}
+                onClick={() => {
+                  handleCategoryClick(category._id, category.category_name);
+                  setSelectedCategory(category._id);
+                  setCategoryId(category._id);
+                }}
               >
                 <div className="flex justify-between">
-                  <li
-                    onClick={() => {
-                      handleCategoryClick(category._id);
-                    }}
-                  >
-                    {category.category_name}
-                  </li>
+                  <li>{category.category_name}</li>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -156,16 +206,20 @@ const ProductTemplate = () => {
 
           <div className="flex flex-col border-r  ">
             {subCategoryList.map((subCategory) => (
-              <ul className="w-80 p-2 hover:bg-gray-100" key={subCategory._id}>
+              <ul
+                className={`w-80 p-2 border-r hover:bg-gray-100 ${selectedsubCategory === subCategory._id ? 'bg-gray-100' : ''}`}
+                key={subCategory._id}
+                onClick={() => {
+                  handleSubcategoryClick(
+                    subCategory._id,
+                    subCategory.category_name
+                  );
+                  setSelectedSubCategory(subCategory._id)
+                  setCategoryId(subCategory._id)
+                }}
+              >
                 <div className="flex justify-between">
-                  <li
-                    className="x"
-                    onClick={() => {
-                      handleSubcategoryClick(subCategory._id);
-                    }}
-                  >
-                    {subCategory.category_name}
-                  </li>
+                  <li className="x">{subCategory.category_name}</li>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -187,8 +241,16 @@ const ProductTemplate = () => {
           <div className="  flex flex-col border-r ">
             {childCategoryList.map((childCategory) => (
               <ul
-                className=" w-80 p-2 hover:bg-gray-100"
+                className={`w-80 p-2 border-r hover:bg-gray-100 ${selectedChildCategory === childCategory._id ? 'bg-gray-100' : ''}`}
                 key={childCategory._id}
+                onClick={() => {
+                  handleChildCategoryClick(
+                    childCategory._id,
+                    childCategory.category_name
+                  );
+                  setSelectedChildCategory(childCategory._id);
+                  setCategoryId(childCategory._id);
+                }}
               >
                 <div className="flex justify-between">
                   <li>{childCategory.category_name}</li>
@@ -211,6 +273,52 @@ const ProductTemplate = () => {
             ))}
           </div>
         </div>
+        {selectedParentId && (
+          <div>
+            <div className="flex m-4">
+              <p className="text-md font-bold">
+                Summary of your selected products
+              </p>
+            </div>
+            <div className="flex flex-col border shadow-md">
+              <div className="flex gap-16 bg-gray-100 p-2">
+                <p className="text-blue-400 text-sm">Remove all</p>
+                <p className="text-sm">Selected Classifications</p>
+                <p className="text-sm">Product Type</p>
+
+                <p className="text-sm mx-16">Classifiaction Path</p>
+              </div>
+
+              <div className="flex gap-16 px-8 py-2 ">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+                <p className="text-sm ml-8">{childpath}</p>
+                <p className="text-sm ml-12">SERVICE CONTRACT</p>
+                <p>{path}</p>
+              </div>
+            </div>
+          
+            <div className="flex justify-end rounded py-12 mx-4">
+            <button className="px-6 py-2 bg-yellow-400 rounded "
+            onClick={()=>{handleGenerateTemplate()}}>
+              Generate Template
+            </button>
+          </div>
+          </div>
+        )}
+      
       </div>
     </div>
   );
