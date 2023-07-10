@@ -2,6 +2,7 @@
 import { data } from "autoprefixer";
 import React, { useEffect, useRef, useState } from "react";
 
+
 const ProductTemplate = () => {
   const [selectedParentId, setSelectedParentId] = useState("");
   const [selectedSubcategoryId, setSelectedSubcategoryId] = useState("");
@@ -13,7 +14,7 @@ const ProductTemplate = () => {
   const [path, setPath] = useState("");
   const [childpath, setChildPath] = useState("");
   const [selectedChildId, setSelectedChildId] = useState("");
-
+  const [error , setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedsubCategory, setSelectedSubCategory] = useState(null);
   const [selectedChildCategory, setSelectedChildCategory] = useState(null);
@@ -86,6 +87,7 @@ const ProductTemplate = () => {
       const requestBody ={
         category_id : categoryId,
       };
+      console.log(requestBody);
       const response = await fetch(' https://bulk-upload-excel.onrender.com/v1/excel/download-excel',{
         method: "POST",
           headers: {
@@ -95,16 +97,14 @@ const ProductTemplate = () => {
           body: JSON.stringify(requestBody),
         }
       );
-
+        console.log(response.json());
 
       if (response.ok) {
-        // OTP sent successfully, redirect to OTP page
-        console.log("Download template");
+      
+      console.log(response.message);
        
       } else {
-        // const errorData = await res.json();
-        // console.error(errorData);
-        // setError(errorData.message.toString());
+       
       }
     } catch (error) {
       console.log(error);
