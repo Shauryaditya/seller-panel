@@ -1,7 +1,9 @@
 "use client";
 import { data } from "autoprefixer";
+import { Router } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-
+import FileDownload from "react-file-download";
+const BASE_URL = `https://two1genx.onrender.com`;
 
 const ProductTemplate = () => {
   const [selectedParentId, setSelectedParentId] = useState("");
@@ -14,7 +16,7 @@ const ProductTemplate = () => {
   const [path, setPath] = useState("");
   const [childpath, setChildPath] = useState("");
   const [selectedChildId, setSelectedChildId] = useState("");
-  const [error , setError] = useState("");
+  const [error, setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedsubCategory, setSelectedSubCategory] = useState(null);
   const [selectedChildCategory, setSelectedChildCategory] = useState(null);
@@ -25,7 +27,7 @@ const ProductTemplate = () => {
 
   useEffect(() => {
     fetch(
-      "https://two1genx.onrender.com/v1/categories/get?filter[category_type][$eq]=parent&page=1&limit=500"
+      `${BASE_URL}/v1/categories/get?filter[category_type][$eq]=parent&page=1&limit=500`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -38,7 +40,6 @@ const ProductTemplate = () => {
     setSelectedParentId(parentId);
     setPath(parentname);
   };
-
 
   useEffect(() => {
     if (selectedParentId) {
@@ -81,15 +82,17 @@ const ProductTemplate = () => {
     setPath(ChildPath);
     setChildPath(childCategoryname);
   };
- const handleGenerateTemplate = async () => {
+  const handleGenerateTemplate = async () => {
     const access_token = localStorage.getItem("access_token");
     try {
-      const requestBody ={
-        category_id : categoryId,
+      const requestBody = {
+        category_id: categoryId,
       };
       console.log(requestBody);
-      const response = await fetch(' https://bulk-upload-excel.onrender.com/v1/excel/download-excel',{
-        method: "POST",
+      const response = await fetch(
+        " https://bulk-upload-excel.onrender.com/v1/excel/download-excel",
+        {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${access_token}`,
@@ -97,22 +100,22 @@ const ProductTemplate = () => {
           body: JSON.stringify(requestBody),
         }
       );
-        console.log(response.json());
 
-      if (response.ok) {
-      
-      console.log(response.message);
-       
+      const responseData = await response.json();
+
+      if (response.ok && responseData.success) {
+        const fileUrl = responseData.download_url;
+        window.location.href = fileUrl;
+
+    
       } else {
-       
+        // Handle error
       }
     } catch (error) {
       console.log(error);
       setError("Something went wrong.");
     }
   };
-
-
 
   return (
     <div className="max-w-screen-2xl mx-auto">
@@ -175,7 +178,9 @@ const ProductTemplate = () => {
           <div className="flex flex-col border-r">
             {parentList.map((category) => (
               <ul
-                className={`w-80 p-2 border-r hover:bg-gray-100 ${selectedCategory === category._id ? 'bg-gray-100' : ''}`}
+                className={`w-80 p-2 border-r hover:bg-gray-100 ${
+                  selectedCategory === category._id ? "bg-gray-100" : ""
+                }`}
                 key={category._id}
                 onClick={() => {
                   handleCategoryClick(category._id, category.category_name);
@@ -207,15 +212,17 @@ const ProductTemplate = () => {
           <div className="flex flex-col border-r  ">
             {subCategoryList.map((subCategory) => (
               <ul
-                className={`w-80 p-2 border-r hover:bg-gray-100 ${selectedsubCategory === subCategory._id ? 'bg-gray-100' : ''}`}
+                className={`w-80 p-2 border-r hover:bg-gray-100 ${
+                  selectedsubCategory === subCategory._id ? "bg-gray-100" : ""
+                }`}
                 key={subCategory._id}
                 onClick={() => {
                   handleSubcategoryClick(
                     subCategory._id,
                     subCategory.category_name
                   );
-                  setSelectedSubCategory(subCategory._id)
-                  setCategoryId(subCategory._id)
+                  setSelectedSubCategory(subCategory._id);
+                  setCategoryId(subCategory._id);
                 }}
               >
                 <div className="flex justify-between">
@@ -241,7 +248,11 @@ const ProductTemplate = () => {
           <div className="  flex flex-col border-r ">
             {childCategoryList.map((childCategory) => (
               <ul
-                className={`w-80 p-2 border-r hover:bg-gray-100 ${selectedChildCategory === childCategory._id ? 'bg-gray-100' : ''}`}
+                className={`w-80 p-2 border-r hover:bg-gray-100 ${
+                  selectedChildCategory === childCategory._id
+                    ? "bg-gray-100"
+                    : ""
+                }`}
                 key={childCategory._id}
                 onClick={() => {
                   handleChildCategoryClick(
@@ -309,16 +320,19 @@ const ProductTemplate = () => {
                 <p>{path}</p>
               </div>
             </div>
-          
+
             <div className="flex justify-end rounded py-12 mx-4">
-            <button className="px-6 py-2 bg-yellow-400 rounded "
-            onClick={()=>{handleGenerateTemplate()}}>
-              Generate Template
-            </button>
-          </div>
+              <button
+                className="px-6 py-2 bg-yellow-400 rounded "
+                onClick={() => {
+                  handleGenerateTemplate();
+                }}
+              >
+                Generate Template
+              </button>
+            </div>
           </div>
         )}
-      
       </div>
     </div>
   );

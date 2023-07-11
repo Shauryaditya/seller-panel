@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 const ProductUpload = () => {
   const [files, setFiles] = useState([]);
+  const [successmessage, setSuccessMessage] = useState("");
 
   const handleFileChange = (event) => {
     setFiles(event.target.files[0]);
@@ -31,6 +32,7 @@ const ProductUpload = () => {
         }
       );
       const data = response.json();
+      setSuccessMessage(data.message);
       console.log(data); // Handle the response as needed
     } catch (error) {
       console.error(error);
@@ -160,33 +162,15 @@ const ProductUpload = () => {
               </div>
             )}
           </div>
-          <div className="max-w-6xl flex flex-row justify-center items-center border-t gap-6 p-2 ml-36">
-            <div className="flex flex-col">
-              <label
-                className="text-end text-[#002F36] font-semibold"
-                htmlFor=""
-              >
-                Email Alert
-              </label>
-              <p className="text-[#002F36] text-sm ">
-                Send an email alert when the upload is complete.
-              </p>
-            </div>
-            <input className=" w-96 h-12 border " type="text" />
-            <div className="flex gap-2">
-              <input type="checkbox" name="" id="" />
-              <label className="text-sm text-[#002F36]" htmlFor="">
-                Remember my email address for future alerts
-              </label>
-            </div>
-          </div>
-          <div className="flex justify-center items-center my-4 -ml-80">
+       
+          <div className="flex justify-center items-center my-4 ml-52">
             <button
               className="px-6 py-2 bg-[#879596] text-white "
              type="submit"
             >
               Upload File
             </button>
+            <p>{successmessage.message}</p>
           </div>
         </div>
       </form>
