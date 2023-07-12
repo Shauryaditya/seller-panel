@@ -1,27 +1,30 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 
 const ProductUpload = () => {
   const [files, setFiles] = useState([]);
   const [successmessage, setSuccessMessage] = useState("");
+  const [verificationStatus, setVerificationStatus] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const handleFileChange = (event) => {
     setFiles(event.target.files[0]);
-  }
-  console.log("Excel files",files);
+  };
+  // console.log("Excel files", files);
 
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    const formData = new FormData();
-   formData.append("excelFile", files);
 
-    console.log("formData>>>",formData);
-   
+    const formData = new FormData();
+    formData.append("excelFile", files);
+
+    // console.log("formData>>>", formData);
+
     try {
       const access_token = localStorage.getItem("access_token");
-      const response =  fetch(
+      const response = await fetch(
         "https://bulk-upload-excel.onrender.com/v1/excel/upload-excel",
         {
           method: "POST",
@@ -31,11 +34,20 @@ const ProductUpload = () => {
           body: formData,
         }
       );
-      const data = response.json();
-      setSuccessMessage(data.message);
-      console.log(data); // Handle the response as needed
+      const data = await response.json();
+      if (response.ok && data.success === true) {
+        console.log("data>>>>>", data);
+        setSuccessMessage(data.message);
+        setVerificationStatus("success");
+      } else {
+        // Request failed, handle the error
+        setSuccessMessage("File upload Failed");
+        setVerificationStatus("error");
+      }
     } catch (error) {
-      console.error(error);
+      // Handle network errors
+      setSuccessMessage("Network error occurred");
+      setVerificationStatus("error");
     }
   };
   const handleDrop = (event) => {
@@ -46,6 +58,19 @@ const ProductUpload = () => {
 
   const handleDragOver = (event) => {
     event.preventDefault();
+  };
+
+  const handleUpload = () => {
+    setIsButtonClicked(true);
+    setIsUploading(true);
+
+    // Perform upload logic here
+
+    // Example: Simulating upload delay
+    setTimeout(() => {
+      setIsUploading(false);
+      // Handle upload completion or error
+    }, 2000);
   };
   return (
     <div className="max-w-screen-2xl mx-auto">
@@ -67,15 +92,21 @@ const ProductUpload = () => {
         </div>
       </div>
       <div className="flex flex-row h-8 mx-4 bg-gray-200 gap-3 p-1">
-        <a className="text-sm" href="">
+        <Link href="/bulk-upload" className="text-sm hover:text-[#007185]">
           Download spreadsheet
-        </a>
-        <a className="text-sm" href="">
+        </Link>
+        <Link
+          href="/bulk-upload/upload"
+          className="text-sm hover:text-[#007185]"
+        >
           Upload your spreadsheet
-        </a>
-        <a className="text-sm" href="">
+        </Link>
+        <Link
+          href="/bulk-upload/status"
+          className="text-sm hover:text-[#007185]"
+        >
           Spreadsheet upload status
-        </a>
+        </Link>
       </div>
       <form action="" onSubmit={handleSubmit}>
         <div className="max-w-full border mx-4 mt-6">
@@ -143,35 +174,41 @@ const ProductUpload = () => {
                 <input
                   id="file-upload"
                   type="file"
-                  multiple
+                  accept=".xlsx"
                   onChange={handleFileChange}
                   className="hidden"
                 />
               </div>
-              <p>Accepted File Format: Excel, TSV</p>
+              <p>Accepted File Format : Excel(.xlsx)</p>
+              {files && (
+                <div className=" flex">
+                  <p>Uploaded file : &nbsp;</p>
+                  <p>{files.name}</p>
+                </div>
+              )}
+                <p
+            className={`text-${
+              verificationStatus === "success" ? "green" : "red"
+            }-500`}
+          >
+            {successmessage}
+          </p>
             </div>
+          
+          </div>
 
-            {files.length > 0 && (
-              <div className="mt-4">
-                <p>Uploaded files:</p>
-                <ul>
-                  {files.map((file, index) => (
-                    <li key={index}>{file.name}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+
+          <div className="flex justify-center items-center my-4 ml-52">
+          <button
+        className="px-6 py-2 bg-[#879596] text-white"
+        type="submit"
+        disabled={isUploading}
+        onClick={handleUpload}
+      >
+        {isButtonClicked ? 'Upload File' : 'Upload File'}
+      </button>
           </div>
        
-          <div className="flex justify-center items-center my-4 ml-52">
-            <button
-              className="px-6 py-2 bg-[#879596] text-white "
-             type="submit"
-            >
-              Upload File
-            </button>
-            <p>{successmessage.message}</p>
-          </div>
         </div>
       </form>
     </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'next/link';
 
 const SelectTemplates = () => {
   const cards = [
@@ -74,10 +75,11 @@ const SelectTemplates = () => {
                   {card.description}
                 </p>
               </div>
-
+              <Link href='/bulk-upload/templates'>
               <button className="bg-gray-100 text-green-800 py-2 px-4 rounded">
                 {card.buttonText}
               </button>
+              </Link>
             </div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 "use client";
 import { headers } from "next/dist/client/components/headers";
 import React, { useState, useEffect, use } from "react";
+import Link from 'next/link';
 import FileDownload from "react-file-download";
 
 const ProductStatus = () => {
@@ -105,15 +106,17 @@ const ProductStatus = () => {
       </div>
       <div className="flex flex-row h-8 mx-4 bg-gray-100 shadow-md gap-3 p-1">
         <div className="flex gap-4 border-x">
-          <a className="text-sm hover:text-[#007185]" href="">
-            Download spreadsheet
-          </a>
-          <a className="text-sm hover:text-[#007185]" href="">
-            Upload your spreadsheet
-          </a>
-          <a className="text-sm hover:text-[#007185]" href="">
-            Spreadsheet upload status
-          </a>
+        <Link href='/bulk-upload'
+             className="text-sm hover:text-[#007185]">Download spreadsheet
+          </Link>
+          <Link href='/bulk-upload/upload'
+             className="text-sm hover:text-[#007185]">
+              Upload your spreadsheet
+          
+          </Link>
+          <Link href='/bulk-upload/status' className="text-sm hover:text-[#007185]">
+              Spreadsheet upload status
+          </Link>
         </div>
       </div>
 

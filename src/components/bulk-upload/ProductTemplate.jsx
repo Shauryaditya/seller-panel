@@ -2,7 +2,7 @@
 import { data } from "autoprefixer";
 import { Router } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import FileDownload from "react-file-download";
+import Link from "next/link";
 const BASE_URL = `https://two1genx.onrender.com`;
 
 const ProductTemplate = () => {
@@ -38,6 +38,7 @@ const ProductTemplate = () => {
 
   const handleCategoryClick = (parentId, parentname) => {
     setSelectedParentId(parentId);
+    setSelectedSubcategoryId("");
     setPath(parentname);
   };
 
@@ -57,6 +58,7 @@ const ProductTemplate = () => {
 
   const handleSubcategoryClick = (SubcategoryId, subCategoryname) => {
     setSelectedSubcategoryId(SubcategoryId);
+    setSelectedChildId("");
     const subPath = path + "/" + subCategoryname;
     setPath(subPath);
   };
@@ -106,8 +108,6 @@ const ProductTemplate = () => {
       if (response.ok && responseData.success) {
         const fileUrl = responseData.download_url;
         window.location.href = fileUrl;
-
-    
       } else {
         // Handle error
       }
@@ -124,17 +124,23 @@ const ProductTemplate = () => {
           <h1 className="text-lg text-blue-600">Add Products Via Upload</h1>
         </div>
       </div>
-      <div className="flex flex-row justify-between h-8 mx-4 hover:shadow-xl  p-1">
+      <div className="flex flex-row justify-between h-8 mx-4 bg-gray-100 shadow-xl  p-1">
         <div className="flex gap-4 border-x">
-          <a className="text-sm hover:text-[#007185]" href="">
+          <Link href="/bulk-upload" className="text-sm hover:text-[#007185]">
             Download spreadsheet
-          </a>
-          <a className="text-sm hover:text-[#007185]" href="">
+          </Link>
+          <Link
+            href="/bulk-upload/upload"
+            className="text-sm hover:text-[#007185]"
+          >
             Upload your spreadsheet
-          </a>
-          <a className="text-sm hover:text-[#007185]" href="">
+          </Link>
+          <Link
+            href="/bulk-upload/status"
+            className="text-sm hover:text-[#007185]"
+          >
             Spreadsheet upload status
-          </a>
+          </Link>
         </div>
         <div className="">
           <p className="text-sm">Add a single product</p>
@@ -291,34 +297,34 @@ const ProductTemplate = () => {
                 Summary of your selected products
               </p>
             </div>
-            <div className="flex flex-col border shadow-md">
-              <div className="flex gap-16 bg-gray-100 p-2">
-                <p className="text-blue-400 text-sm">Remove all</p>
-                <p className="text-sm">Selected Classifications</p>
-                <p className="text-sm">Product Type</p>
+            <div className="">
+              <table className="flex flex-col border shadow-md">
+                <tr className="flex gap-16 bg-gray-100 p-2">
+                  <td className="text-blue-400 text-sm text-center">Remove</td>
+                  <td className="text-sm text-center">Selected Classifications</td>
+                  <td className="text-sm  text-center">Classifiaction path</td>
+                </tr>
 
-                <p className="text-sm mx-16">Classifiaction Path</p>
-              </div>
-
-              <div className="flex gap-16 px-8 py-2 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-                <p className="text-sm ml-8">{childpath}</p>
-                <p className="text-sm ml-12">SERVICE CONTRACT</p>
-                <p>{path}</p>
-              </div>
+                <tr className="flex gap-28 p-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                  <td className="text-sm text-center">{childpath}</td>
+                 
+                  <td>{path}</td>
+                </tr>
+              </table>
             </div>
 
             <div className="flex justify-end rounded py-12 mx-4">
