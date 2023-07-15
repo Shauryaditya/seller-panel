@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from "react";
+const BASE_URL = 'https://two1genx.onrender.com/'
 
 const EmailModal = ({ visible2, onClose2 }) => {
     if (!visible2) return null;
@@ -30,7 +31,7 @@ const EmailModal = ({ visible2, onClose2 }) => {
                 email: email,
             };
             const response = await fetch(
-                "https://seller-info.onrender.com/v1/seller/send-email-update-otp",
+                `${BASE_URL}v1/seller/send-email-update-otp`,
                 {
                     method: "POST",
                     headers: {
@@ -66,7 +67,7 @@ const EmailModal = ({ visible2, onClose2 }) => {
                 otp: Otp
             };
             const res = await fetch(
-                "https://seller-info.onrender.com/v1/seller/verify-update-email",
+                `${BASE_URL}/v1/seller/verify-update-email`,
                 {
                     method: "POST",
                     headers: {

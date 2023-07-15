@@ -202,10 +202,10 @@ const ProductUpload = () => {
           <button
         className="px-6 py-2 bg-[#879596] text-white"
         type="submit"
-        disabled={isUploading}
+       
         onClick={handleUpload}
       >
-        {isButtonClicked ? 'Upload File' : 'Upload File'}
+Upload File
       </button>
           </div>
        

@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+const BASE_URL = 'https://two1genx.onrender.com/'
 const SellerAddressList = () => {
     const [data, setData] = useState([]);
 
@@ -31,7 +32,7 @@ const SellerAddressList = () => {
 
         // Fetch seller address list using the access token
         fetch(
-            "https://seller-info.onrender.com/v1/seller/get-seller-address-list",
+            `${BASE_URL}v1/seller/get-seller-address-list`,
             {
                 headers: {
                     Authorization: `Bearer ${access_token}`,

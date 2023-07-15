@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+const BASE_URL = 'https://two1genx.onrender.com/'
 const VerifyEmailModal = ({ visible3, onClose3 }) => {
     if (!visible3) return null;
 
@@ -32,7 +33,7 @@ const VerifyEmailModal = ({ visible3, onClose3 }) => {
 
         try {
             const response = await fetch(
-                "https://seller-info.onrender.com/v1/seller/verify-email-otp",
+                `${BASE_URL}/v1/seller/verify-email-otp`,
                 {
                     method: "POST",
                     headers: {

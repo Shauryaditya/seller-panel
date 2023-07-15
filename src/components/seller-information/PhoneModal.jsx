@@ -1,6 +1,8 @@
 'use client'
 import React, { useState } from "react";
 
+const BASE_URL = 'https://two1genx.onrender.com/'
+
 const PhoneModal = ({ visible, onClose }) => {
     if (!visible) return null;
     const [Otp, setOtp] = useState("");
@@ -27,7 +29,7 @@ const PhoneModal = ({ visible, onClose }) => {
                 phone: "+91" + phone,
             };
             const response = await fetch(
-                "https://seller-info.onrender.com/v1/seller/send-phone-update-otp",
+                `${BASE_URL}v1/seller/send-phone-update-otp`   ,
                 {
                     method: "POST",
                     headers: {
@@ -65,7 +67,7 @@ const PhoneModal = ({ visible, onClose }) => {
                 otp: Otp,
             };
             const res = await fetch(
-                "https://seller-info.onrender.com/v1/seller/verify-update-phone",
+                `${BASE_URL}v1/seller/verify-update-phone`,
                 {
                     method: "POST",
                     headers: {
@@ -104,7 +106,7 @@ const PhoneModal = ({ visible, onClose }) => {
                         <input
                             type="text"
                             className="w-full rounded border border-solid 
-            border-[#888C8C] px-2 py-1"
+                                     border-[#888C8C] px-2 py-1"
                             placeholder="Enter Mobile Number"
                             onChange={handlePhoneChange}
                             value={phone}

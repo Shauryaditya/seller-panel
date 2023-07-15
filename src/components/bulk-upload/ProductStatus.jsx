@@ -180,7 +180,7 @@ const ProductStatus = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {data && data.map((item, index) => (
               <tr key={index}>
                   <td className="py-2 px-4 border-b text-center">
                 <p>1</p>

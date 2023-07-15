@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+const BASE_URL = 'https://two1genx.onrender.com/'
 const SellerInvoice = () => {
     const [formData, setFormData] = useState({
         name: "",
@@ -19,7 +20,7 @@ const SellerInvoice = () => {
         // Add more countries as needed
     ];
 
-
+const [message, setMessage] = useState("");
 
 
 
@@ -30,7 +31,7 @@ const SellerInvoice = () => {
 
         try {
             const response = await fetch(
-                "https://seller-info.onrender.com/v1/seller/add-seller-address",
+                `${BASE_URL}v1/seller/add-seller-address`,
                 {
                     method: "POST",
                     headers: {
@@ -46,6 +47,8 @@ const SellerInvoice = () => {
             if (response.ok) {
                 // Handle success
                 console.log("Data submitted successfully");
+                setMessage(data.message);
+                window.location.href = "/profile/address";
                 // Reset the form
                 setFormData({
                     name: "",
@@ -262,6 +265,7 @@ const SellerInvoice = () => {
                             </button>
                         </div>
                     </div>
+                    <p>{message}</p>
                 </form>
             </div>
         </section>
